@@ -1,0 +1,21 @@
+.rule-options-list {
+  display: grid;
+  grid-template-columns: repeat(1fr);
+  grid-gap: 20px;
+}
+
+.rule-option-value {
+  background: #fff;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.rule-options-tabs {
+ .pt-tab-list {
+   width: 100%;
+ } 
+ .pt-tab-indicator-wrapper {
+   width: 100%;
+ }
+}

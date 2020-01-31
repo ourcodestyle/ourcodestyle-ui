@@ -1,0 +1,338 @@
+@import "~normalize.css/normalize.css";
+@import "~@blueprintjs/core/lib/css/blueprint.css";
+@import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
+@import '~codemirror/lib/codemirror.css';
+@import '~codemirror/theme/oceanic-next.css';
+@import "./rules";
+@import "./rule-options";
+@import "./style-guides";
+@import "./users";
+
+@import url('https://fonts.googleapis.com/css?family=Just+Another+Hand');
+@import url('https://fonts.googleapis.com/css?family=Teko');
+
+/* Variables */
+$vin-blue: #5bb7db;
+$vin-green: #60b044;
+$vin-red: #ff0000;
+
+#main-container {
+  width: 1280px;
+  margin: auto;
+}
+
+
+h2.section-title {
+  font-size: 50px
+}
+
+h3.section-title {
+  font-size: 32px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-family: 'Teko', cursive;
+}
+
+.logo {
+  height: 40px;
+}
+
+.organization-title {
+  background: #eee;
+  text-align: center;
+  padding: 30px;
+  padding-bottom: 0;
+  margin-bottom: 30px;
+
+  // background: linear-gradient(to bottom, #fff 0%,#fff 50%,#eee 100%);
+  // background: linear-gradient(to bottom, #f1e767 0%,#feb645 100%);
+
+  .organization-logo-and-name-container {
+    min-width: 620px;
+    max-width: 650px;
+    display: inline-block;
+  }
+  .organization-logo-and-name {
+    height: 120px;
+    vertical-align: middle;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+  }
+  .organization-logo-holder {
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    img {
+      max-width: 120px;
+      display: inline-block;
+      border-radius: 50%;
+      background: #e1e1e1;
+    }
+    .edit-cover {
+      position: absolute;
+      background-color: rgba(70, 70, 70, 0.5);
+      font-weight: bold;
+      color: #fff;
+      line-height: 120px;
+      width: 120px;
+      height: 120px;
+      margin-top: 0;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+    }
+    &:hover {
+      .edit-cover {
+        display: block;
+      }
+    }
+  }
+  .organization-name {
+    max-width: 500px;
+  }
+
+  .organization-tabs {
+    margin-top: 30px;
+    text-align: center;
+    .pt-tabs {
+      display: inline-block;
+    }
+    .pt-tab {
+      padding-left: 6px;
+      padding-right: 6px;
+      border-bottom: none;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    .pt-tab[aria-selected="true"] {
+      background: #fff;
+      box-shadow: none;
+    }
+  }
+}
+
+
+
+.form-container {
+  border: 1px solid #eee;
+  padding: 20px;
+}
+
+.rule-status-voting {
+  width: 100%;
+  text-align: center;
+
+  .switch-option-name{
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .votes-count {
+    font-size: 12px;
+    margin-top: 5px;
+  }
+}
+
+
+.votes-display {
+
+  .user-icons-container {
+    padding-left: 20px;
+    margin-top: -8px;
+  }
+
+  .user-icons-container-vertical {
+    padding-left: 12px;
+  }
+
+  .user-icon {
+    margin-left: -12px;
+    border: 1px solid #eee;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    img {
+      width: 28px;
+      height: 28px;
+    }
+  }
+}
+
+
+.selectable-callout {
+  border: 1px solid rgba(0,0,0,0);
+  &:hover {
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  margin-top: -20px;
+}
+
+
+
+.card-add {
+  &:hover {
+    color: green;
+    background-color: #eeffee;
+  }
+}
+
+.CodeMirror {
+  border: 1px solid #eee;
+  height: auto;
+  min-height: 80px;
+}
+
+.activity-small {
+  .activity-list {
+    font-size: 10pt;
+  }
+}
+.activity-list {
+  .activity-container {
+    margin-bottom: 30px;
+  }
+  .activity-head {
+    line-height: 40px;
+    span {
+      margin: 10px;
+    }
+  }
+  .activity-body {
+    padding-left: 50px;
+  }
+  .activity-date {
+    color: #999;
+  }
+}
+
+// .markdown {
+//   code {
+//     color: rgb(134, 101, 134);
+//     font-weight: bold;
+//   }
+// }
+
+
+.positive-count {
+  color: #0D8050
+}
+
+.negative-count {
+  color: #DB3737
+}
+
+.style-guide-line-stat-bubble {
+  display: 'inline-block';
+  padding: 4px;
+  border-radius: 12px;
+  margin: 2px;
+  color: #fff;
+  font-size: 12px;
+  background: #8dbcce;
+  // color: #444;
+  // border: 1px solid #5bb7db;
+}
+
+.card-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.home-page-sitename {
+  font-family: 'Just Another Hand', cursive;
+  font-size: 100px;
+  font-weight: normal;
+  color: #007988;
+}
+/*
+  007988
+*/
+
+.home-page-siteslogan {
+  font-family: 'Teko', cursive;
+  font-size: 32px;
+  margin-bottom: 10px;
+  font-weight: lighter;
+}
+
+.home-page-site-short-description {
+  font-family: 'Helvetica Neue', Helvetica, Arial;
+}
+
+.home-page-site-logo-credits {
+  color: #bbb;
+  font-style: italic;
+  font-size: 10px;
+  a {
+    color: #bbb;
+    text-decoration: underline;
+  }
+}
+
+.home-page-site-how-it-works-title {
+  font-family: 'Teko', cursive;
+  font-size: 26px;
+  margin-bottom: 10px;
+  margin-top: 100px;
+  text-align: center;
+}
+
+
+.section-list {
+  margin: 0;
+  padding: 0;
+  li.first {
+    margin-bottom: 20px;
+  }
+  li {
+    list-style-type: none;
+    padding-top: 10px;
+    img {
+      margin-right: 12px;
+    }
+  }
+}
+
+.settings-panel-header {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.footer {
+  background: #fafafa;
+  border-top: 2px solid #eee;
+  padding: 20px;
+  margin-top: 100px;
+  margin-bottom: 0;
+  h3 {
+    text-align: left;
+  }
+  ul.links-list {
+    padding: 0;
+    list-style: none;
+    li {
+      text-align: left;
+      font-size: 14px;
+      line-height: 28px;
+    }
+  }
+}
+
+.small-notice {
+  font-size: 10px;
+  color: #999;
+}
+
+.rule-online-container {
+  position: fixed;
+  border: 1px solid #aaa;
+  bottom: 10px;
+  right: 10px;
+  background: #fff;
+  padding: 10px;
+  z-index: 2;
+}

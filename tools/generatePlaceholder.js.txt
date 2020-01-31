@@ -1,0 +1,26 @@
+// Show file basic fields
+
+import React from 'react'
+import Api from '~/api'
+import {fconnect} from '~/utils/components'
+import * as actions from './redux/actions'
+
+class Show extends React.Component {
+
+  componentDidMount() {
+  }
+
+  render() {
+    const { props } = this
+    const { actions } = props
+
+    return <div>
+
+    </div>
+  }
+}
+
+export default fconnect(
+    (state) => ({}), 
+    actions
+  )(Show)

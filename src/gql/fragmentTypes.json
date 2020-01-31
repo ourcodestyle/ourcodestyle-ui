@@ -1,0 +1,27 @@
+{
+  "__schema": {
+    "types": [
+      {
+        "kind": "UNION",
+        "name": "Commentable",
+        "possibleTypes": [
+          {
+            "name": "RuleOptionValue"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "Trackable",
+        "possibleTypes": [
+          {
+            "name": "Vote"
+          },
+          {
+            "name": "Comment"
+          }
+        ]
+      }
+    ]
+  }
+}
