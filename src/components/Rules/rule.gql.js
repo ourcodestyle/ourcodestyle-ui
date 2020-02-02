@@ -11,8 +11,6 @@ export default `
       id
       categoryId
       name
-      kind
-      linter
       description
       shortDescription
       votes { ... VOTE }

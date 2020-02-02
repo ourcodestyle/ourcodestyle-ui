@@ -22,7 +22,7 @@ class EditRuleModal extends React.Component {
 
   constructor(props){
     super(props)
-    this.state = { kind: 'with_options' }
+    this.state = {}
   }
 
   render(){
@@ -43,16 +43,10 @@ class EditRuleModal extends React.Component {
       closeModal()
     }
 
-    const onChange = (fieldName, value) => {
-      if (fieldName == 'kind') {
-        this.setState({kind: value})
-      }
-    }
-
     const categories = styleGuide.categories.map(c => ({ label: c.name, value: c.id }))
 
     return <Dialog icon="add" isOpen={isOpen} onClose={closeModal} title="Create Rule">
-            <Form forRecord={rule} onSuccess={onSuccess.bind(this)} onChange={onChange}>
+            <Form forRecord={rule} onSuccess={onSuccess.bind(this)}>
               <div className={Classes.DIALOG_BODY}>
                 <Errors />
                 <Input field="styleGuideId ID" as="hidden" />

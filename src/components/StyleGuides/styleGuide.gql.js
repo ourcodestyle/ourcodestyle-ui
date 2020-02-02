@@ -33,7 +33,6 @@ export default `
         id
         name
         shortDescription
-        kind
         isNotSupported
         commentsCount
         votesCount

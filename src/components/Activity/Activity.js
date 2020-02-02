@@ -58,8 +58,6 @@ class Activity extends QueryComponent {
                     name
                     description
                     shortDescription
-                    kind
-                    linter
                   }
                 }
               }
@@ -81,8 +79,6 @@ class Activity extends QueryComponent {
                     rule {
                       id
                       name
-                      kind
-                      linter
                     }
                   }
                 }

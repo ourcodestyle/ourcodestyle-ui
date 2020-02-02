@@ -143,7 +143,6 @@ class StyleGuideShow extends QueryComponent {
       label: <div><Link to={`/organizations/${styleGuide.organization.domain}/style-guides/${styleGuide.id}/rules/${rule.id}`}>
         {rule.name}
       </Link>
-      { rule.kind == "with_options" && <span>&nbsp;<i style={{color: '#ccc'}}>with options</i></span> }
       </div>,
       icon: "dot"
     }
