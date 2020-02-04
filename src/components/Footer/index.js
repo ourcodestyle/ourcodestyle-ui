@@ -12,8 +12,13 @@ class Footer extends React.Component {
           <ul className={Classes.LIST + " links-list"}>
             <li></li>
             <li>
-              <a href="https://github.com/ourcodestyle/ourcodestyle/issues" target="_blank">
+              <a href="https://github.com/ourcodestyle/ourcodestyle-root/issues" target="_blank">
                 Issues & Proposals
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/ourcodestyle/ourcodestyle-root" target="_blank">
+                Contribute
               </a>
             </li>
           </ul>
