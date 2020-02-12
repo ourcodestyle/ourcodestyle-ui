@@ -127,7 +127,6 @@ class Activity extends QueryComponent {
   }
 
   loadMore(){
-    console.log('loadMore');
     let variables = this.queryVariables()
     const page = this.state.page + 1
     this.setState({ page, loadingMore: true })
@@ -137,8 +136,6 @@ class Activity extends QueryComponent {
 
   moreQueryLoaded(data) {
     const newActivities = this.state.activities.concat(data.activities)
-    console.log('newActivities');
-    console.dir(newActivities);
     this.setState({ activities: newActivities, loadingMore: false })
   }
 
@@ -233,7 +230,7 @@ class Activity extends QueryComponent {
 
         {votedFor}
 
-        <b><Link to={link}>{option.option.rule.name}</Link></b>
+        <b><Link to={link}>{rule.name}</Link></b>
         <span className="activity-date"><TimeAgo date={activity.createdAt} /></span>
       </div>
       { activityBody &&
