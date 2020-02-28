@@ -100,8 +100,7 @@ class RuleShow extends QueryComponent {
 
     const next = ({data}) => {
       // already updated it, no need for 3rd rewrite
-      if (data.voted && data.voted.userId != currentUser.id) {
-        // console.debug('subscription got vote')
+      if (data.voted && data.voted.userId !== currentUser.id) {
         this.props.actions.voted({vote: data.voted})
       } else {
         // console.debug("skiping vote in subscription as it comes for currentUser")

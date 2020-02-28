@@ -149,15 +149,13 @@ function addVote({apolloClient, vote, allowMultipleValues}) {
 
 function* voted({vote}) {
   const apolloClient = yield getContext('apolloClient')
-  // console.log('saga voted', {apolloClient, vote})
-  // yield call(addVote, {apolloClient, vote})
 
   const cache = apolloClient.store.cache
   const query = gql(RULE_GQL)
   const variables = { id: vote.ruleId }
   let data = cache.readQuery({ query, variables })
-  let index = _.findIndex(data.rule.votes, { userId: vote.userId, ruleOptionId: vote.ruleOptionId })
-  console.log('index = %s', index)
+  let index = _.findIndex(data.rule.votes, { userId: vote.userId, optionId: vote.optionId })
+
   if (index > -1) {
     data.rule.votes[index] = vote
   } else {

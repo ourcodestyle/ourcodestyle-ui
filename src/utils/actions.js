@@ -1,11 +1,7 @@
-import {
-  fromPairs,
-  zip,
-} from 'lodash'
-import uuidv1 from 'uuid/v1'
+import _ from 'lodash'
 
-export function namespace(prefix) {
-  return (name) => prefix + "." + name
+export function namespace(namespaceName) {
+  return actionName => [ namespaceName, actionName ].join(".")
 }
 
 export function createRequestTypes(base, types = ["init", "request", "success", "failure"]) {

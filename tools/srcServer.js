@@ -10,7 +10,7 @@ import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 import proxy from 'http-proxy-middleware'
-import config from '../webpack.config.dev';
+import config from '../webpack.config.dev'
 
 const bundler = webpack(config);
 

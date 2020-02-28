@@ -62,24 +62,18 @@ class MembersList extends QueryComponent {
   }
 
   content(){
-    const { client, actions } = this.props
-    const memberships = this.state.memberships
-    const canAssignRole = this.props.canAssignRole
-    const pendingInvitations = this.state.pendingInvitations
-    const membershipRequests = this.state.membershipRequests
+    const {
+      client,
+      actions,
+      canAssignRole
+    } = this.props
 
-    const onAssignRoleSuccess = (cache, { data }) => {
-      console.log('onAssignRoleSuccess.data');
-      console.dir(data);
-    }
-
-    const onAssignRoleError = (apolloError) => {
-      console.log('apolloError');
-      console.dir(apolloError);
-      apolloError.test = "bro"
-    }
-
-    const organizationId = this.state.organizationId
+    const {
+      memberships,
+      pendingInvitations,
+      membershipRequests,
+      organizationId
+    } = this.state
 
     const revokeInvitation = async (id) => {
       const mutation = gql`
@@ -92,36 +86,6 @@ class MembersList extends QueryComponent {
                 id
                 nickname
                 status
-              }
-            }
-          }
-        }
-      `
-      const variables = { id }
-      await client.mutate({ mutation, variables })
-    }
-
-    const acceptMembershipRequest = async (id) => {
-      const mutation = gql`
-        mutation ($id: ID!) {
-          acceptMembershipRequest(id: $id) {
-            id
-            status
-            organization {
-              id
-              membershipRequests(status: "pending") {
-                id
-                status
-              }
-              memberships {
-                id
-                role
-                user {
-                  id
-                  name
-                  pictureUrl
-                  nickname
-                }
               }
             }
           }
@@ -194,8 +158,6 @@ class MembersList extends QueryComponent {
                     content={<div style={{width: '500px', padding: 20}}>
                       <Mutation
                         mutation={ASSIGN_ROLE_GQL}
-                        update={onAssignRoleSuccess}
-                        onError={onAssignRoleError}
                         >
                         {(assignRole, { data, loading, error }) => (
                           <RadioGroup
@@ -264,7 +226,7 @@ class MembersList extends QueryComponent {
                     text="Accept"
                     intent="success"
                     icon="add"
-                    onClick={() => acceptMembershipRequest(membershipRequest.id)}
+                    onClick={() => this.acceptMembershipRequest(membershipRequest.id)}
                     />
                   <Button
                     text="Decline"
@@ -281,6 +243,37 @@ class MembersList extends QueryComponent {
     </div>
   }
 
+
+  async acceptMembershipRequest(id) {
+    const { client } = this.props
+    const mutation = gql`
+      mutation ($id: ID!) {
+        acceptMembershipRequest(id: $id) {
+          id
+          status
+          organization {
+            id
+            membershipRequests(status: "pending") {
+              id
+              status
+            }
+            memberships {
+              id
+              role
+              user {
+                id
+                name
+                pictureUrl
+                nickname
+              }
+            }
+          }
+        }
+      }
+    `
+    const variables = { id }
+    await client.mutate({ mutation, variables })
+  }
 }
 
 MembersList.propTypes = {
@@ -291,5 +284,4 @@ MembersList.propTypes = {
 export default compose(
   actionsConnect({openModal}),
   withApollo,
-
 )(MembersList)

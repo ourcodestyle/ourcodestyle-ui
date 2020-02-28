@@ -7,7 +7,6 @@ import App from './App'
 import { ApolloProvider } from "react-apollo"
 
 class Root extends Component {
-
   render() {
     return <Provider store={this.props.store}>
             <ConnectedRouter history={this.props.history}>
