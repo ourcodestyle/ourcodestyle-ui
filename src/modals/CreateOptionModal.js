@@ -32,7 +32,7 @@ class CreateOptionModal extends React.Component {
 
     return (
       <Dialog
-        icon="edit"
+        icon="add"
         isOpen={isOpen}
         onClose={closeModal}
         title="Create Option"
