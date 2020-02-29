@@ -1,8 +1,6 @@
 import React from 'react'
-import Api from '~/api'
 import { withApollo } from 'react-apollo'
 import gql from "graphql-tag"
-import { Mutation } from "react-apollo"
 
 import queryString from 'query-string'
 
@@ -15,10 +13,7 @@ const AUTH_GQL = gql`
 `
 
 class AuthPage extends React.Component {
-
   componentDidMount() {
-    console.log('this.props');
-    console.dir(this.props);
     const provider = this.props.match.params.provider
     const apolloClient = this.props.client
     const invitation = queryString.parse(this.props.location.search).invitation

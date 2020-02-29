@@ -32,6 +32,8 @@ const VotesDisplay = ({ votes, vertical, withIntent, hasConsensus }) => {
     votesCount = pluralize("Vote", votes.length, true)
   }
 
+  const userIconList = votes.slice(0, MAX_USER_ICONS).map(vote => <UserIcon key={vote.user.id} href={vote.user.pictureUrl} />)
+
   if (vertical) {
     const consensusIcon = <div style={{ margin: 5 }}>
       <Icon title="Conensus Solution" icon={IconNames.ENDORSED} intent={Intent.SUCCESS} />
@@ -43,7 +45,7 @@ const VotesDisplay = ({ votes, vertical, withIntent, hasConsensus }) => {
           {hasConsensus && consensusIcon}
           <div style={{ marginBottom: 10 }}>{votesCount}</div>
           <div className="user-icons-container-vertical">
-            {votes.slice(0, MAX_USER_ICONS).map(vote => <UserIcon key={vote.user.id} href={vote.user.pictureUrl} />)}
+            {userIconList}
           </div>
         </div>
       </div>
@@ -54,7 +56,7 @@ const VotesDisplay = ({ votes, vertical, withIntent, hasConsensus }) => {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
           <span style={{ textAlign: 'right' }}>{votesCount}</span>
           <span className="user-icons-container">
-            {votes.slice(0, MAX_USER_ICONS).map(vote => <UserIcon key={vote.user.id} href={vote.user.pictureUrl} />)}
+            {userIconList}
           </span>
         </div>
       </div>

@@ -1,13 +1,20 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import _ from 'lodash'
 
 import VoteOrUnvoteButton from './VoteOrUnvoteButton'
 import VotesDisplay from './VotesDisplay'
 
 class VotingUpDown extends React.Component {
-
   render() {
-    const { styleGuide, rule, param, option, votes, currentUser } = this.props
+    const {
+      styleGuide,
+      rule,
+      param,
+      option,
+      votes,
+      currentUser
+    } = this.props
 
     const currentUserVote = _.find(votes, { userId: currentUser.id }) || {}
 
@@ -16,6 +23,7 @@ class VotingUpDown extends React.Component {
       paramId: param.id,
       optionId: option.id,
       allowMultipleValues: true,
+      styleGuide,
     }
 
     const positiveCount = _.filter(votes, { intent: 'positive' }).length
@@ -30,7 +38,6 @@ class VotingUpDown extends React.Component {
           currentUserVoteId={currentUserVote.intent === 'positive' && currentUserVote.id}
           intent='positive'
           icon='thumbs-up'
-          styleGuide={styleGuide}
         />
       </div>
       <VoteOrUnvoteButton
@@ -39,11 +46,17 @@ class VotingUpDown extends React.Component {
         currentUserVoteId={currentUserVote.intent === 'negative' && currentUserVote.id}
         intent='negative'
         icon='thumbs-down'
-        styleGuide={styleGuide}
       />
     </div>
   }
-
 }
 
+VotingUpDown.propTypes = {
+  styleGuide: PropTypes.object,
+  rule: PropTypes.object,
+  param: PropTypes.object,
+  option: PropTypes.object,
+  votes: PropTypes.array,
+  currentUser: PropTypes.object,
+}
 export default VotingUpDown

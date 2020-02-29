@@ -1,10 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { List } from 'immutable'
-import Api from '~/api'
 import { Button } from '@blueprintjs/core'
 import { push } from 'connected-react-router'
-import { fConnect } from '~/utils/components'
 
 import { Query } from "react-apollo"
 import gql from "graphql-tag"
@@ -26,57 +23,53 @@ const ORGANIZATIONS_QUERY = gql`
 class Index extends React.Component {
 
   render() {
-    const { props } = this
-
     const redirectTo = (location) => () => push(location)
 
-  return <Query
-          query={ORGANIZATIONS_QUERY}
-         >
-    {({ loading, error, data }) => {
-      if (loading) return <p>Loading...</p>
-      if (error) return <p>Error :(</p>
+    return <Query query={ORGANIZATIONS_QUERY}>
+      {({ loading, error, data }) => {
+        if (loading) return <p>Loading...</p>
+        if (error) return <p>Error :(</p>
 
-      return <div>
-        <table className="pt-html-table">
-          <thead>
-            <tr>
-              <th>Organization</th>
-              <th>Style Guides</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              data.organizations.map((organization) => {
-                return <tr key={organization.id}>
-                  <td>
-                    <Link to={`/organizations/${organization.domain}`}>{organization.name}</Link>
-                  </td>
-                  <td>
-                    {
-                      organization.styleGuides.map((styleGuide) => {
-                        return <Link key={styleGuide.id} to={`/organizations/${organization.domain}/style-guides/${styleGuide.id}`}>
-                                {styleGuide.name}
-                              </Link>
-                      })
-                    }
-                  </td>
-                  <td>
-                    <Button onClick={redirectTo(`/organizations/${organization.domain}/style-guides/new`)}>
-                      Create Style Guide
-                    </Button>
-                  </td>
-                </tr>
-              })
-            }
-          </tbody>
-        </table>
-      </div>
+        return <div>
+          <table className="pt-html-table">
+            <thead>
+              <tr>
+                <th>Organization</th>
+                <th>Style Guides</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                data.organizations.map((organization) => {
+                  return <tr key={organization.id}>
+                    <td>
+                      <Link to={`/organizations/${organization.domain}`}>{organization.name}</Link>
+                    </td>
+                    <td>
+                      {
+                        organization.styleGuides.map((styleGuide) => {
+                          return <Link key={styleGuide.id} to={`/organizations/${organization.domain}/style-guides/${styleGuide.id}`}>
+                                  {styleGuide.name}
+                                </Link>
+                        })
+                      }
+                    </td>
+                    <td>
+                      <Button onClick={redirectTo(`/organizations/${organization.domain}/style-guides/new`)}>
+                        Create Style Guide
+                      </Button>
+                    </td>
+                  </tr>
+                })
+              }
+            </tbody>
+          </table>
+        </div>
 
 
-    }}
-  </Query>
+      }}
+    </Query>
   }
 }
 

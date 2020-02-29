@@ -117,31 +117,35 @@ function addVote({apolloClient, vote, allowMultipleValues}) {
   const cache = apolloClient.store.cache
   const query = gql(RULE_GQL)
   const variables = { id: vote.ruleId }
-  let data = cache.readQuery({ query, variables })
+  const data = cache.readQuery({ query, variables })
   const votes = data.rule.votes
 
-  const replaceVote = () => {
+  const upsertVote = (votes, vote) => {
     const index = _.findIndex(votes, _.pick(vote, ['userId', 'paramId']))
     if (index > -1) {
-      data.rule.votes[index] = vote
+      votes[index] = vote
     } else {
-      data.rule.votes = data.rule.votes.concat([vote])
+      votes = votes.concat([vote])
     }
+
+    return votes
   }
 
-  const appendVote = () => {
+  const appendVote = (votes, vote) => {
     const index = _.findIndex(votes, _.pick(vote, ['userId', 'paramId', 'optionId']))
     if (index > -1) {
-      data.rule.votes[index] = vote
+      votes[index] = vote
     } else {
-      data.rule.votes = data.rule.votes.concat([vote])
+      votes = data.rule.votes.concat([vote])
     }
+
+    return votes
   }
 
   if (allowMultipleValues) {
-    appendVote()
+    data.rule.votes = appendVote(votes, vote)
   } else {
-    replaceVote()
+    data.rule.votes = upsertVote(votes, vote)
   }
 
   cache.writeQuery({ query, variables, data })
@@ -149,7 +153,6 @@ function addVote({apolloClient, vote, allowMultipleValues}) {
 
 function* voted({vote}) {
   const apolloClient = yield getContext('apolloClient')
-
   const cache = apolloClient.store.cache
   const query = gql(RULE_GQL)
   const variables = { id: vote.ruleId }
@@ -160,7 +163,6 @@ function* voted({vote}) {
     data.rule.votes[index] = vote
   } else {
     data.rule.votes = data.rule.votes.concat([vote])
-    console.log('adding a vote', data.rule.votes)
   }
 
   cache.writeQuery({ query, variables, data })
@@ -192,21 +194,7 @@ function* deleteOption({ id }) {
     store.writeQuery({ query, data })
   }
 
-  const optimisticResponse = {
-    __typename: 'Mutation',
-    deleteOption: {
-      __typename: 'Option',
-      id: OptionId,
-      option: {
-        __typename: 'RuleOption',
-        id: '1'
-      }
-    },
-  }
-
-  apolloClient.mutate({
-    mutation, variables, update
-  })
+  apolloClient.mutate({ mutation, variables, update })
 }
 
 function* deleteRule({ id }) {

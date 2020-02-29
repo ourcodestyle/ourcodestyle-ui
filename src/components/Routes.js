@@ -4,12 +4,8 @@ import PropTypes from 'prop-types'
 
 import {
   Switch,
-  NavLink,
   Route,
-  withRouter
 } from 'react-router'
-
-import {fConnect} from '~/utils/components'
 
 import Header from './Header'
 import Footer from './Footer'
@@ -28,7 +24,6 @@ import AuthLinkPage from './AuthLinkPage'
 import OrganizationsIndex from './Organizations/Index'
 import OrganizationsShow from './Organizations/Show'
 
-import StyleGuidesNew from './StyleGuides/New'
 import StyleGuidesShow from './StyleGuides/Show'
 import LandingGuide from './StyleGuides/LandingGuide'
 
@@ -81,7 +76,6 @@ class Routes extends React.Component {
             {/* Rules */}
             <Route path="/organizations/:organizationDomain/style-guides/:styleGuideId/rules/:ruleId/:paramId?" component={RulesShow} />
             {/* <Route path="/organizations/:organizationDomain/style-guides/:styleGuideId/rules/:ruleId" exact component={RulesShow} /> */}
-            <Route path="/organizations/:organizationDomain/style-guides/new" component={StyleGuidesNew} exact />
             <Route path="/organizations/:organizationDomain/style-guides/:styleGuideId" component={StyleGuidesShow} />
 
             {/* Legal */}

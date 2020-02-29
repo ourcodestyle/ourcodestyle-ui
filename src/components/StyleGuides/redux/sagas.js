@@ -1,5 +1,4 @@
 import {
-  select,
   getContext,
   put,
   call,
@@ -8,25 +7,12 @@ import gql from 'graphql-tag'
 
 import {
   watchLatest,
-  runRequest
 } from '~/utils/sagas'
 import { AppToaster } from '~/components/toaster'
-import api from '~/api'
 import * as actions from './actions'
 
 import {delay} from '~/utils/sagas'
 import StyleGuideGQL from '../styleGuide.gql'
-
-function* create() {
-  const newStyleGuide = yield select(({ StyleGuides }) => StyleGuides.get('newStyleGuide').toJS())
-  const domain = newStyleGuide.domain
-  const params = {
-    name: newStyleGuide.name,
-    language: newStyleGuide.code,
-  }
-  const onFailure = error => AppToaster.show({ message: error.errorText, intent: 'danger' })
-  yield runRequest(actions.create, [api.organizations.styleGuides.create, domain, params], {onFailure})
-}
 
 function* generateConfigFile({styleGuideId}) {
   yield put(actions.generateConfigFile.request({styleGuideId}))
@@ -74,7 +60,6 @@ function* checkPopulatingComplete({styleGuideId}){
 
 export default function* root() {
   yield watchLatest({
-    [actions.create]: create,
     [actions.generateConfigFile]: generateConfigFile,
     [actions.checkPopulatingComplete]: checkPopulatingComplete,
   })

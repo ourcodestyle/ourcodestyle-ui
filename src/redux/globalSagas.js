@@ -1,16 +1,10 @@
 /* eslint-disable require-yield */
 import 'babel-polyfill'
-import { call, put, getContext } from 'redux-saga/effects'
-import uuidv1 from 'uuid/v1'
-import { push } from 'connected-react-router'
+import { call, getContext } from 'redux-saga/effects'
 
 import {
   watchLatest,
-  runRequest
 } from '~/utils/sagas'
-import { Intent } from '@blueprintjs/core'
-import Api from '~/api'
-import Storage from '~/services/storage'
 import { AppToaster } from '~/components/toaster'
 import * as globalActions from '~/redux/globalActions'
 import gql from 'graphql-tag'
