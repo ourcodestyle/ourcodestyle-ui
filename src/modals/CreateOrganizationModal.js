@@ -16,8 +16,28 @@ import {
   Errors,
 } from '~/fuks'
 
-class CreateOrganizationModal extends React.Component {
+const extraQuery = `
+  memberships {
+    id
+    role
+    user {
+      id
+      memberships {
+        id
+        role
+        organization {
+          id
+        }
+      }
+    }
+  }
+`
 
+const organization = {
+  __typename: "Organization"
+}
+
+class CreateOrganizationModal extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -26,35 +46,14 @@ class CreateOrganizationModal extends React.Component {
     }
   }
 
+  onSuccess(organization) {
+    this.props.history.push(`/organizations/${organization.domain}`)
+    this.props.closeModal()
+  }
+
   render(){
-    const { isOpen, closeModal, history } = this.props
+    const { isOpen, closeModal } = this.props
     if (!isOpen) return null
-
-    const organization = {
-      __typename: "Organization"
-    }
-
-    const onSuccess = (organization) => {
-      history.push(`/organizations/${organization.domain}`)
-      closeModal()
-    }
-
-    const extraQuery = `
-      memberships {
-        id
-        role
-        user {
-          id
-          memberships {
-            id
-            role
-            organization {
-              id
-            }
-          }
-        }
-      }
-    `
 
     const onChange = (fieldName, value) => {
       if (fieldName === 'name' && !this.state.wasManualDomainChange) {
@@ -68,7 +67,7 @@ class CreateOrganizationModal extends React.Component {
 
     return (
       <Dialog icon="add" isOpen={isOpen} onClose={closeModal} title="New Organization">
-        <Form forRecord={organization} onSuccess={onSuccess} extraQuery={extraQuery}  onChange={onChange}>
+        <Form forRecord={organization} onSuccess={this.onSuccess.bind(this)} extraQuery={extraQuery} onChange={onChange}>
           <div className={Classes.DIALOG_BODY}>
             <Errors />
             <Input field="name String!"       label="Name" autoFocus />
