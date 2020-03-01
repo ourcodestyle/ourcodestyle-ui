@@ -26,35 +26,15 @@ class RuleSwitch extends React.Component {
   }
 
   buildIcon(name) {
-    if (name == "false") {
-      return IconNames.THUMBS_DOWN
-    }
-
-    if (name == "true") {
-      return IconNames.THUMBS_UP
-    }
-
-    if (name == "bad") {
-      return IconNames.THUMBS_DOWN
-    }
-
-    if (name == "good") {
-      return IconNames.THUMBS_UP
-    }
-
-    if (name == "error") {
-      return IconNames.ERROR
-    }
-
-    if (name == "warn") {
-      return IconNames.WARNING_SIGN
-    }
-
-    if (name == "off") {
-      return IconNames.DISABLE
-    }
-
-    return null
+    return {
+      'false': IconNames.THUMBS_DOWN,
+      'true':  IconNames.THUMBS_UP,
+      "bad":   IconNames.THUMBS_DOWN,
+      "good":  IconNames.THUMBS_UP,
+      "error": IconNames.ERROR,
+      "warn":  IconNames.WARNING_SIGN,
+      "off":   IconNames.DISABLE,
+    }[name] || null
   }
 
   mappingForLabel(name) {
