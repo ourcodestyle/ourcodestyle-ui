@@ -64,7 +64,7 @@
     "http-proxy-middleware": "0.18.0",
     "humps": "2.0.1",
     "immutable": "3.8.2",
-    "lodash": "4.17.5",
+    "lodash": "4.17.13",
     "node-pre-gyp": "0.14.0",
     "normalize.css": "8.0.0",
     "object-assign": "4.1.0",
