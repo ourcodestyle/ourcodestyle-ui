@@ -3,12 +3,11 @@ import _ from 'lodash'
 
 import linters from '~/lists/linters'
 
-export const RuboCopIcon = (props) => {
-  const data = _.find(linters, {value: "rubocop"})
-  return <img {...props} src={data.iconSrc} />
+const buildIcon = (linterName) => {
+  const { iconSrc } = _.find(linters, {value: linterName})
+
+  return props => <img {...props} src={iconSrc} />
 }
 
-export const ESLintIcon = (props) => {
-  const data = _.find(linters, {value: "eslint"})
-  return <img {...props} src={data.iconSrc} />
-}
+export const RuboCopIcon = buildIcon('rubocop')
+export const ESLintIcon = buildIcon('eslint')

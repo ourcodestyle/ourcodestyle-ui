@@ -6,7 +6,6 @@ const currentUserCan = (currentUser) => (assets) => (action, record) => {
       styleGuide,
     } = assets
 
-    const isGuest = !currentUser.id
     let isAdmin = false
     let isMember = false
     let isCreator = false
@@ -19,8 +18,13 @@ const currentUserCan = (currentUser) => (assets) => (action, record) => {
     }
 
     if (organizationId) {
-      isAdmin = _.includes(_.map(_.filter(currentUser.memberships, {role: 'admin'}), (m) => parseInt(m.organization.id) ), parseInt(organizationId))
-      isMember = _.includes(_.map(_.filter(currentUser.memberships, {role: 'user'}), (m) => parseInt(m.organization.id) ), parseInt(organizationId))
+      const hasRole = role =>
+        _.includes(
+          _.map(_.filter(currentUser.memberships, {role}), m => parseInt(m.organization.id)),
+          parseInt(organizationId)
+        )
+      isAdmin = hasRole('admin')
+      isMember = hasRole('user')
     }
 
     if (record && record.createdByUserId) {
