@@ -1,16 +1,16 @@
+import _ from 'lodash'
+
 export const policy = (user, record) => {
+  const isOrganizationAdmin = organizationId =>
+    _.chain(user.memberships).
+    filter({role: 'admin'}).
+    map('organization.id').
+    includes(organizationId).
+    value()
 
   const organization = {
-    canAssignRole: () => _.chain(user.memberships).
-                          filter({role: 'admin'}).
-                          map('organization.id').
-                          includes(record.id).
-                          value(),
-    canInviteMembers: () => _.chain(user.memberships).
-                          filter({role: 'admin'}).
-                          map('organization.id').
-                          includes(record.id).
-                          value(),
+    canAssignRole: () => isOrganizationAdmin(record.id),
+    canInviteMembers: () => isOrganizationAdmin(record.id),
   }
 
   return {
@@ -18,6 +18,3 @@ export const policy = (user, record) => {
   }
 }
 
-export const getOrganizations = (user) => {
-
-}
