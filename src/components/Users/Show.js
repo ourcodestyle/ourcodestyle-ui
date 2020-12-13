@@ -15,7 +15,7 @@ import {
 } from '@blueprintjs/core'
 import { openModal } from '~/redux/globalActions'
 
-import {OrganizationIcon} from '~/pure/icons'
+import {ProjectIcon} from '~/pure/icons'
 import Activity from '~/components/Activity/Activity'
 
 import QueryComponent from '~/fuks/QueryComponent'
@@ -40,12 +40,12 @@ class Show extends QueryComponent {
           nickname
           fullName
           pictureUrl
-          maxOrganizationsCount
+          maxProjectsCount
           votesCount
           memberships {
             id
             role
-            organization {
+            project {
               id
               name
               domain
@@ -131,57 +131,57 @@ class Show extends QueryComponent {
     }
   }
 
-  organizations(){
+  projects(){
     const props = this.props
 
     return <HTMLTable bordered striped>
       <thead>
         <tr>
           <th colSpan={3}>
-            <h3 className="section-title">Organizations</h3>
+            <h3 className="section-title">Projects</h3>
           </th>
         </tr>
       </thead>
       <tbody>
       { this.state.user.memberships.map(membership => {
-        const organization = membership.organization
-        return <tr key={organization.id}>
+        const project = membership.project
+        return <tr key={project.id}>
           <td style={{ width: 44 }}>
-            <OrganizationIcon organization={organization} style={{ width: 30, height: 30, position: 'absolute', marginTop: -6, marginLeft: -6 }} />
+            <ProjectIcon project={project} style={{ width: 30, height: 30, position: 'absolute', marginTop: -6, marginLeft: -6 }} />
           </td>
           <td>
-            <Link to={`/organizations/${organization.domain}`}>{organization.name}</Link>
+            <Link to={`/projects/${project.domain}`}>{project.name}</Link>
           </td>
           <td>
             <Tag>{membership.role}</Tag>
-            { this.state.user.id === organization.createdByUserId && <Tag intent="success" style={{marginLeft: 5}}>creator</Tag> }
+            { this.state.user.id === project.createdByUserId && <Tag intent="success" style={{marginLeft: 5}}>creator</Tag> }
           </td>
         </tr>
       }) }
       <tr>
         <td colSpan={3}>
-          { this.isCurrentUserProfile() && this.createOrganizationButton() }
+          { this.isCurrentUserProfile() && this.createProjectButton() }
         </td>
       </tr>
       </tbody>
     </HTMLTable>
   }
 
-  createOrganizationButton(){
+  createProjectButton(){
     const props = this.props
-    const createdOrganizationsCount = _.filter(this.state.user.memberships, m => m.organization.createdByUserId === this.state.user.id).length
-    const maxReached = createdOrganizationsCount >= this.state.user.maxOrganizationsCount
-    const clickNewOrganization = () => {
-      props.actions.openModal("CreateOrganization")
+    const createdProjectsCount = _.filter(this.state.user.memberships, m => m.project.createdByUserId === this.state.user.id).length
+    const maxReached = createdProjectsCount >= this.state.user.maxProjectsCount
+    const clickNewProject = () => {
+      props.actions.openModal("CreateProject")
     }
     return <div>
         <Button
         disabled={maxReached}
-        text="Create Organization"
+        text="Create Project"
         icon="add"
-        onClick={clickNewOrganization}
+        onClick={clickNewProject}
       />
-      { maxReached && <div className="small-notice">Max number of organizations created</div>}
+      { maxReached && <div className="small-notice">Max number of projects created</div>}
     </div>
   }
 
@@ -227,7 +227,7 @@ class Show extends QueryComponent {
 
   generalTab(){
     return <div>
-      {this.organizations()}
+      {this.projects()}
       {this.codeStyleMates()}
     </div>
   }

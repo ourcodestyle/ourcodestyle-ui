@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 
 import {
   StyleGuideIcon,
-  OrganizationIcon,
+  ProjectIcon,
 } from '~/pure/icons'
 
 import { actionsConnect } from '~/utils/components'
@@ -28,44 +28,44 @@ class Dashboard extends React.Component {
 
   render() {
     if (this.props.currentUser.memberships.length > 0) {
-      return this.displayOrganizations()
+      return this.displayProjects()
     } else {
-      return this.noOrganizations()
+      return this.noProjects()
     }
   }
 
-  noOrganizations() {
+  noProjects() {
     const {
       currentUser,
       actions,
     } = this.props
 
-    const clickNewOrganization = () => {
-      actions.openModal({modalName: "CreateOrganization", modalProps: {} })
+    const clickNewProject = () => {
+      actions.openModal({modalName: "CreateProject", modalProps: {} })
     }
 
     return <div>
       <Card style={{ width: 600, margin: 'auto', marginTop: 50 }}>
-        <h1>No Organizations</h1>
+        <h1>No Projects</h1>
 
         <p>
-          In order to work with site you need to belong to some organization.
+          In order to work with site you need to belong to some project.
         </p>
-        <p>Ask your colleage to add you as organization member.</p>
+        <p>Ask your colleage to add you as project member.</p>
 
         <hr style={{ marginTop: 50, marginBottom: 50, border: 'none', borderTop: '1px solid #ccc' }} />
 
-        <p>Or create organization by yourself now</p>
+        <p>Or create project by yourself now</p>
         <Button
-          text="Create Organization"
+          text="Create Project"
           icon="add"
-          onClick={clickNewOrganization}
+          onClick={clickNewProject}
         />
       </Card>
     </div>
   }
 
-  displayOrganizations() {
+  displayProjects() {
     const {
       currentUser,
       actions,
@@ -79,18 +79,18 @@ class Dashboard extends React.Component {
 
         <ul className="section-list">
         { currentUser.memberships.map(membership => {
-          const organization = membership.organization
+          const project = membership.project
           return <li key={membership.id} className="first">
-            <Link to={`/organizations/${organization.domain}`}>
-              <OrganizationIcon organization={organization} style={{height: 30, marginTop: -10, position: 'absolute'}} />
+            <Link to={`/projects/${project.domain}`}>
+              <ProjectIcon project={project} style={{height: 30, marginTop: -10, position: 'absolute'}} />
               <div style={{ marginBottom: 10, paddingLeft: 40, fontWeight: 'bold', color: "#000", textDecoration: 'underline' }}>
-                { organization.name }
+                { project.name }
               </div>
             </Link>
             <ul>
-              { membership.organization.styleGuides.map(styleGuide => {
+              { membership.project.styleGuides.map(styleGuide => {
                 return <li key={styleGuide.id}>
-                  <Link to={`/organizations/${organization.domain}/style-guides/${styleGuide.id}`}>
+                  <Link to={`/projects/${project.domain}/style-guides/${styleGuide.id}`}>
                     <StyleGuideIcon styleGuide={styleGuide} style={{height: 20}} />
                     {styleGuide.name}
                   </Link>

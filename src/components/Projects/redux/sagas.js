@@ -12,7 +12,7 @@ function* removeMembership({id}) {
   const mutation = gql`
     mutation($id: ID!) {
       removeMembership(id: $id) {
-        organization {
+        project {
           id
           memberships {
             id

@@ -21,8 +21,8 @@ import AuthPage from './AuthPage'
 import AuthCallbackPage from './AuthCallbackPage'
 import AuthLinkPage from './AuthLinkPage'
 
-import OrganizationsIndex from './Organizations/Index'
-import OrganizationsShow from './Organizations/Show'
+import ProjectsIndex from './Projects/Index'
+import ProjectsShow from './Projects/Show'
 
 import StyleGuidesShow from './StyleGuides/Show'
 import LandingGuide from './StyleGuides/LandingGuide'
@@ -66,17 +66,17 @@ class Routes extends React.Component {
             <Route path="/users/:nickname" render={(props) => <UserShow nickname={props.match.params.nickname} />} exact />
             <Route path="/users/:nickname/:selectedTab" component={UserShow} exact />
 
-            {/* Organization */}
-            <Route path="/organizations" component={OrganizationsIndex} exact />
-            <Route path="/organizations/:organizationDomain" component={OrganizationsShow} exact />
-            <Route path="/organizations/:organizationDomain/dashboard" component={OrganizationsShow} exact />
-            <Route path="/organizations/:organizationDomain/members" component={OrganizationsShow} exact />
-            <Route path="/organizations/:organizationDomain/settings" component={OrganizationsShow} exact />
+            {/* Project */}
+            <Route path="/projects" component={ProjectsIndex} exact />
+            <Route path="/projects/:projectDomain" component={ProjectsShow} exact />
+            <Route path="/projects/:projectDomain/dashboard" component={ProjectsShow} exact />
+            <Route path="/projects/:projectDomain/members" component={ProjectsShow} exact />
+            <Route path="/projects/:projectDomain/settings" component={ProjectsShow} exact />
 
             {/* Rules */}
-            <Route path="/organizations/:organizationDomain/style-guides/:styleGuideId/rules/:ruleId/:paramId?" component={RulesShow} />
-            {/* <Route path="/organizations/:organizationDomain/style-guides/:styleGuideId/rules/:ruleId" exact component={RulesShow} /> */}
-            <Route path="/organizations/:organizationDomain/style-guides/:styleGuideId" component={StyleGuidesShow} />
+            <Route path="/projects/:projectDomain/style-guides/:styleGuideId/rules/:ruleId/:paramId?" component={RulesShow} />
+            {/* <Route path="/projects/:projectDomain/style-guides/:styleGuideId/rules/:ruleId" exact component={RulesShow} /> */}
+            <Route path="/projects/:projectDomain/style-guides/:styleGuideId" component={StyleGuidesShow} />
 
             {/* Legal */}
             <Route path="/privacy-policy" exact component={PrivacyPolicy} />

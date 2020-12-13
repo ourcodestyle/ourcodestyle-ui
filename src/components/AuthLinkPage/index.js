@@ -17,7 +17,7 @@ import UserIconWithName from '~/pure/UserIconWithName'
 const INVITATION_QUERY = gql`
   query($secret: String){
     invitation(secret: $secret){
-      organization {
+      project {
         id
         name
         domain
@@ -53,20 +53,20 @@ class AuthLinkPage extends React.Component {
     return <Button text="Accept Invitation" />
   }
 
-  gotToOrganizationButton(){
+  gotToProjectButton(){
 
   }
 
 
-  content({organization, inviter}){
+  content({project, inviter}){
     const {currentUser} = this.props
 
     return <Card style={{textAlign: 'center', marginTop: 20}}>
-      <div className="organization-logo-holder">
-        <img src={organization.logoUrl || '/images/organization-no-logo.png'}  />
+      <div className="project-logo-holder">
+        <img src={project.logoUrl || '/images/project-no-logo.png'}  />
       </div>
 
-      <h3 style={{ fontWeight: 'normal', margin: 30 }}>You have been invited to join organization <b>{organization.name}</b> by user <UserIconWithName user={inviter} /></h3>
+      <h3 style={{ fontWeight: 'normal', margin: 30 }}>You have been invited to join project <b>{project.name}</b> by user <UserIconWithName user={inviter} /></h3>
 
       <div style={{ marginTop: 30 }}>
         { currentUser.id && this.acceptButton() }

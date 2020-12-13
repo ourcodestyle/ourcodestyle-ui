@@ -139,7 +139,7 @@ class StyleGuideSettings extends QueryComponent {
 
   publicOptions() {
     const voterOptions = [
-      { label: "Only Organization Members",  value: "members" },
+      { label: "Only Project Members",  value: "members" },
       { label: "Anyone with GitHub account", value: "anyone"  },
     ]
     return <Input field="whoCanVote String" label="Who can vote?" as="radio" collection={voterOptions} hideOptionalLabel />

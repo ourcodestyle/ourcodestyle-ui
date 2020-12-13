@@ -7,11 +7,11 @@ export const AsyncState = {
   failure: { failure: true, pending: false, complete: true  },
 }
 
-export const Organization = Record({
+export const Project = Record({
   id: "",
   name: "",
   domain: "",
   styleGuides: new List(),
   isLoading: true,
   isDeleted: false,
-}, 'Organization')
+}, 'Project')

@@ -39,7 +39,7 @@ class EditRuleModal extends React.Component {
     }
 
     const onSuccess = (data) => {
-      this.props.history.push(`/organizations/shiphawk/style-guides/${data.styleGuideId}/rules/${data.id}`)
+      this.props.history.push(`/projects/shiphawk/style-guides/${data.styleGuideId}/rules/${data.id}`)
       closeModal()
     }
 

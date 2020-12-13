@@ -13,7 +13,7 @@ export default `
       linter
       description
       createdAt
-      organizationId
+      projectId
       isRulesPopulated
       createdByUserId
       createdByUser {
@@ -24,7 +24,7 @@ export default `
         updatedAt
         url
       }
-      organization {
+      project {
         id
         name
         domain

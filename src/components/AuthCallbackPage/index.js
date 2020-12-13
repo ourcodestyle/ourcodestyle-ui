@@ -19,7 +19,7 @@ const VERIFY_GQL = gql`
 const ACCEPT_INVITATION_GQL = gql`
   mutation ($secret: String!){
     acceptInvitation(secret: $secret){
-      organization {
+      project {
         id
         domain
         name
@@ -56,10 +56,10 @@ class AuthCallbackPage extends React.Component {
           mutation: ACCEPT_INVITATION_GQL,
           variables: { secret: invitation }
         }).then(({data}) => {
-          const organization = data.acceptInvitation.organization
+          const project = data.acceptInvitation.project
           try {
             apolloClient.query({query: gql(PROFILE_QUERY), fetchPolicy: "network-only"}).then(result => {
-              history.push(`/organizations/${organization.domain}`)
+              history.push(`/projects/${project.domain}`)
             })
           } catch(e) {
             debugger

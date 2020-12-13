@@ -1,20 +1,20 @@
 import _ from 'lodash'
 
 export const policy = (user, record) => {
-  const isOrganizationAdmin = organizationId =>
+  const isProjectAdmin = projectId =>
     _.chain(user.memberships).
     filter({role: 'admin'}).
-    map('organization.id').
-    includes(organizationId).
+    map('project.id').
+    includes(projectId).
     value()
 
-  const organization = {
-    canAssignRole: () => isOrganizationAdmin(record.id),
-    canInviteMembers: () => isOrganizationAdmin(record.id),
+  const project = {
+    canAssignRole: () => isProjectAdmin(record.id),
+    canInviteMembers: () => isProjectAdmin(record.id),
   }
 
   return {
-    organization
+    project
   }
 }
 

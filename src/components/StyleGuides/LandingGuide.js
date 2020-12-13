@@ -8,7 +8,7 @@ class LandingGuide extends QueryComponent {
   query(){
     return `
     query ($slug: String) {
-      organization(domain: "master") {
+      project(domain: "master") {
         id
         styleGuides(slug: $slug) {
           id
@@ -22,9 +22,9 @@ class LandingGuide extends QueryComponent {
     return { slug: this.props.slug }
   }
 
-  queryLoaded({organization}) {
+  queryLoaded({project}) {
     this.setState({
-      styleGuideId: organization.styleGuides[0].id
+      styleGuideId: project.styleGuides[0].id
     })
   }
 

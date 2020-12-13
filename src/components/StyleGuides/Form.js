@@ -44,7 +44,7 @@ class Form extends React.Component {
       <FuksForm forRecord={record} onSuccess={onSuccess} dontResetFieldsOnSubmit>
         <div className={Classes.DIALOG_BODY}>
           <Errors />
-          { !record.id && <Input field="organizationId Int" as="hidden" /> }
+          { !record.id && <Input field="projectId Int" as="hidden" /> }
           <Input field="name String!" label="Name" autoFocus  />
           { !record.id && <Input field="language String!"   label="Programming Language" as="select" collection={languages} /> }
           <Input field="description String" label="Description" as="textarea" />

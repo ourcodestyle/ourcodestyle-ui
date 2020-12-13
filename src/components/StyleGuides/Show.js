@@ -117,10 +117,10 @@ class StyleGuideShow extends QueryComponent {
 
   breadcrumps(){
     const styleGuide = this.state.styleGuide
-    const organization = styleGuide.organization
+    const project = styleGuide.project
 
     const items = [
-      { text: organization.name, href: `/organizations/${organization.domain}` },
+      { text: project.name, href: `/projects/${project.domain}` },
       { text: styleGuide.name, href: null },
     ]
     const renderCurrentBreadcrumb = ({ text, ...restProps }) => {
@@ -140,7 +140,7 @@ class StyleGuideShow extends QueryComponent {
 
     return {
       id: rule.id,
-      label: <div><Link to={`/organizations/${styleGuide.organization.domain}/style-guides/${styleGuide.id}/rules/${rule.id}`}>
+      label: <div><Link to={`/projects/${styleGuide.project.domain}/style-guides/${styleGuide.id}/rules/${rule.id}`}>
         {rule.name}
       </Link>
       </div>,
@@ -329,7 +329,7 @@ class StyleGuideShow extends QueryComponent {
                 </td>
                 <td style={{ width: 300 }}>
                   { !rule.isNotSupported &&
-                  <Link to={`/organizations/${styleGuide.organization.domain}/style-guides/${styleGuide.id}/rules/${rule.id}`}>
+                  <Link to={`/projects/${styleGuide.project.domain}/style-guides/${styleGuide.id}/rules/${rule.id}`}>
                     <h3 style={{display: 'inline'}}>{trimRuleName(rule)}</h3>
                   </Link>
                   }

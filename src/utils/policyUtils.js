@@ -1,13 +1,13 @@
 import _ from 'lodash'
 
-export const canEditOrganization = (currentUser, organizationId) => {
+export const canEditProject = (currentUser, projectId) => {
   return _.some(currentUser.memberships, (m) => {
-    return m.organization.id === organizationId && m.role === 'admin'
+    return m.project.id === projectId && m.role === 'admin'
   })
 }
 
-export const canSuggest = (currentUser, organizationId) => {
-  return _.some(currentUser.memberships, ({role, organization}) => {
-    return organization.id === organizationId && _.includes(['admin', 'member'], role)
+export const canSuggest = (currentUser, projectId) => {
+  return _.some(currentUser.memberships, ({role, project}) => {
+    return project.id === projectId && _.includes(['admin', 'member'], role)
   })
 }

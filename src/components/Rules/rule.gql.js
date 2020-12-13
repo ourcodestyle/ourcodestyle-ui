@@ -22,13 +22,13 @@ export default `
         linter
         whoCanVote
         createdByUserId
-        organizationId
+        projectId
         categories {
           id
           name
           description
         }
-        organization {
+        project {
           id
           name
           domain

@@ -24,28 +24,28 @@ class CloneStyleGuideModal extends React.Component {
   constructor(props) {
     super(props)
 
-    if (props.organizations.length > 0){
-      this.state = { selectedOrganizationId: props.organizations[0].id }
+    if (props.projects.length > 0){
+      this.state = { selectedProjectId: props.projects[0].id }
     }
   }
 
   render(){
-    const { isOpen, closeModal, styleGuideId, organizations, requestId, requestState, actions } = this.props
+    const { isOpen, closeModal, styleGuideId, projects, requestId, requestState, actions } = this.props
     if (!isOpen) return null
 
-    const collection = organizations.map(organization => ({
-      value: organization.id,
-      label: organization.name
+    const collection = projects.map(project => ({
+      value: project.id,
+      label: project.name
     }))
 
     const onChange = (event) => {
-      this.setState({ selectedOrganizationId: event.target.value })
+      this.setState({ selectedProjectId: event.target.value })
     }
 
     const params = {
       styleGuideId,
       requestId,
-      organizationId: this.state.selectedOrganizationId,
+      projectId: this.state.selectedProjectId,
     }
 
     const onClickClone = () => {
@@ -54,18 +54,18 @@ class CloneStyleGuideModal extends React.Component {
 
     return <Dialog icon="add" isOpen={isOpen} onClose={closeModal} title="Clone Style Guide">
               <div className={Classes.DIALOG_BODY}>
-                { organizations.length > 0 && <FormGroup label="Select Organization to clone to">
+                { projects.length > 0 && <FormGroup label="Select Project to clone to">
                   <Select
                     collection={collection}
                     onChange={onChange}
-                    value={this.state.selectedOrganizationId}
+                    value={this.state.selectedProjectId}
                     />
                 </FormGroup> }
-                { organizations.length == 0 && "You don't have Organizations to clone into" }
+                { projects.length == 0 && "You don't have Projects to clone into" }
               </div>
               <div className={Classes.DIALOG_FOOTER}>
                 <div className={Classes.DIALOG_FOOTER_ACTIONS}>
-                  <Button loading={requestState.pending} disabled={organizations.length == 0} text="Clone" intent={Intent.PRIMARY} onClick={onClickClone} />
+                  <Button loading={requestState.pending} disabled={projects.length == 0} text="Clone" intent={Intent.PRIMARY} onClick={onClickClone} />
                 </div>
               </div>
           </Dialog>
@@ -74,16 +74,16 @@ class CloneStyleGuideModal extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const organizations = _.chain(ownProps.currentUser.memberships).
+  const projects = _.chain(ownProps.currentUser.memberships).
     filter({role: 'admin'}).
-    map('organization').
-    reject({id: ownProps.styleGuideOrganizationId}).
+    map('project').
+    reject({id: ownProps.styleGuideProjectId}).
     value()
 
   const requestState = state.requestState.get(ownProps.requestId, AsyncState.init)
 
   return {
-    organizations,
+    projects,
     requestState
   }
 }

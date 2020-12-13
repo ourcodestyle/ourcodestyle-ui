@@ -43,7 +43,7 @@ class CreateStyleGuide extends React.Component {
 
     const styleGuide = {
       __typename: 'StyleGuide',
-      organizationId: props.organizationId,
+      projectId: props.projectId,
       language: this.state.language,
       linter: this.state.linter,
       wasManualNameChange: false,
@@ -51,7 +51,7 @@ class CreateStyleGuide extends React.Component {
 
     const onSuccess = (styleGuide) => {
       props.closeModal()
-      props.history.push(`/organizations/${props.organizationDomain}/style-guides/${styleGuide.id}`)
+      props.history.push(`/projects/${props.projectDomain}/style-guides/${styleGuide.id}`)
     }
 
     const onChange = ((fieldName, value) => {
@@ -78,7 +78,7 @@ class CreateStyleGuide extends React.Component {
     }).bind(this)
 
     const extraQuery = `
-      organization {
+      project {
         id
         styleGuides {
           id
@@ -111,7 +111,7 @@ class CreateStyleGuide extends React.Component {
           >
           <div className={Classes.DIALOG_BODY}>
             <Errors />
-            <Input field="organizationId ID" as="hidden" />
+            <Input field="projectId ID" as="hidden" />
             <Input field="linter String" label="Linter" as="select" collection={linters} includeBlank={true} hideOptionalLabel={true} />
             <Input
               field="language String"

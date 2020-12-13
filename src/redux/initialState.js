@@ -11,7 +11,7 @@ const initialState = new Map({
   fetchComplete: false,
   asyncState: new Map(),
   models: new Map({
-    organization: new List([])
+    project: new List([])
   }),
   openedModal: "",
   modalProps: {}

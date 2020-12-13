@@ -12,7 +12,7 @@ import {
   Classes,
 } from '@blueprintjs/core'
 
-import { withCurrentUser } from '~/contexts'
+import { withCurrentUser } from '../components/Projects/node_modules/~/contexts'
 import {
   Form,
   Input,
@@ -21,21 +21,21 @@ import {
 } from '~/fuks'
 
 const REQUEST_MEMBERSHIP_GQL = gql`
-  mutation ($organizationId: ID!){
-    requestMembership(organizationId: $organizationId){
+  mutation ($projectId: ID!){
+    requestMembership(projectId: $projectId){
       user {
         id
         membershipRequests {
           id
           status
-          organizationId
+          projectId
         }
       }
     }
   }
 `
 
-class RequestAccessToOrganizationModal extends React.Component {
+class RequestAccessToProjectModal extends React.Component {
 
   constructor(props){
     super(props)
@@ -44,10 +44,10 @@ class RequestAccessToOrganizationModal extends React.Component {
 
   async requestInvitation(){
     this.setState({ pending: true })
-    const { client, organizationId } = this.props
+    const { client, projectId } = this.props
 
     const mutation = REQUEST_MEMBERSHIP_GQL
-    const variables = { organizationId }
+    const variables = { projectId }
     const response = await client.mutate({ mutation, variables })
 
     const membershipInvitation = response.data.requestMembership
@@ -60,10 +60,10 @@ class RequestAccessToOrganizationModal extends React.Component {
       isOpen,
       closeModal,
       currentUser,
-      organizationId
+      projectId
     } = this.props
 
-    const membershipRequest = _.find(currentUser.membershipRequests, {organizationId})
+    const membershipRequest = _.find(currentUser.membershipRequests, {projectId})
 
     const onClose = (...args) => {
       closeModal()
@@ -72,7 +72,7 @@ class RequestAccessToOrganizationModal extends React.Component {
       closeModal()
     }
 
-    const title = membershipRequest ? "Pending Approval" : "Request membership to Organization"
+    const title = membershipRequest ? "Pending Approval" : "Request membership to Project"
 
     return (
       <Dialog
@@ -91,8 +91,8 @@ class RequestAccessToOrganizationModal extends React.Component {
   requestDialog(){
     return <div>
         <div className={Classes.DIALOG_BODY}>
-          By clicking below button you will request membership to organization.
-          Please wait until admin of organization will confirm your membership.
+          By clicking below button you will request membership to project.
+          Please wait until admin of project will confirm your membership.
         </div>
         <div className={Classes.DIALOG_FOOTER}>
           <div className={Classes.DIALOG_FOOTER_ACTIONS}>
@@ -110,8 +110,8 @@ class RequestAccessToOrganizationModal extends React.Component {
   pleaseWait(){
     return <div>
         <div className={Classes.DIALOG_BODY}>
-          <p>You have requested membership in this organization.</p>
-          <p>Please wait until admin of organization will confirm your membership.</p>
+          <p>You have requested membership in this project.</p>
+          <p>Please wait until admin of project will confirm your membership.</p>
         </div>
         <div className={Classes.DIALOG_FOOTER}>
           <div className={Classes.DIALOG_FOOTER_ACTIONS}>
@@ -123,7 +123,7 @@ class RequestAccessToOrganizationModal extends React.Component {
   wasDeclined(){
     return <div>
         <div className={Classes.DIALOG_BODY}>
-          <p>You have requested membership in this organization.</p>
+          <p>You have requested membership in this project.</p>
           <p>But admin has <b>declined</b> your request</p>
         </div>
         <div className={Classes.DIALOG_FOOTER}>
@@ -139,4 +139,4 @@ export default compose(
   withCurrentUser,
   withRouter,
   withApollo,
-)(RequestAccessToOrganizationModal)
+)(RequestAccessToProjectModal)

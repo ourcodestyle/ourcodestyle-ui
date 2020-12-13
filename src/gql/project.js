@@ -1,8 +1,8 @@
 import {USER} from '~/gql/fragments'
 
-export const ORGANIZATION_MEMBERS = `
-  query readOrganization($domain: String!){
-    organization(domain: $domain){
+export const PROJECT_MEMBERS = `
+  query readProject($domain: String!){
+    project(domain: $domain){
       id
       createdByUserId
       memberships {

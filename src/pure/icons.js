@@ -31,9 +31,9 @@ export const StyleGuideIcon = (propsWIthStyleGuide) => {
   }
 }
 
-export const OrganizationIcon = (propsWithOrganization) => {
-  const { organization, ...props } = propsWithOrganization
-  return <img {...props} src={organization.logoUrl || '/images/organization-no-logo.png'}  />
+export const ProjectIcon = (propsWithProject) => {
+  const { project, ...props } = propsWithProject
+  return <img {...props} src={project.logoUrl || '/images/project-no-logo.png'}  />
 }
 
 export const LanguageIcon = (propsWithLanguage) => {

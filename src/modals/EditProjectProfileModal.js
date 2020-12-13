@@ -13,10 +13,10 @@ import {
   FormSubmit,
 } from '~/fuks'
 
-class EditOrganizationProfileModal extends React.Component {
+class EditProjectProfileModal extends React.Component {
 
   render(){
-    const { isOpen, closeModal, organization } = this.props
+    const { isOpen, closeModal, project } = this.props
     if (!isOpen) return null
 
     const onSuccess = () => {
@@ -29,9 +29,9 @@ class EditOrganizationProfileModal extends React.Component {
         icon="edit"
         isOpen={isOpen}
         onClose={closeModal}
-        title="Edit Organization Profile"
+        title="Edit Project Profile"
       >
-        <Form forRecord={organization} onSuccess={onSuccess}>
+        <Form forRecord={project} onSuccess={onSuccess}>
           <div className={Classes.DIALOG_BODY}>
             <Input field="name String!" />
             <Input field="domain String!" />
@@ -49,4 +49,4 @@ class EditOrganizationProfileModal extends React.Component {
   }
 }
 
-export default EditOrganizationProfileModal
+export default EditProjectProfileModal

@@ -22,7 +22,7 @@ class StyleGuideDelete extends React.Component {
 
     const onSuccess = (styleGuide) => {
       props.closeModal()
-      props.history.push(`/organizations/${props.styleGuide.organization.domain}/style-guides`)
+      props.history.push(`/projects/${props.styleGuide.project.domain}/style-guides`)
     }
 
     return (

@@ -28,8 +28,8 @@ export default function (props) {
     // }
   }
 
-  const organization = {
-    __typename: "Organization"
+  const project = {
+    __typename: "Project"
   }
 
 // console.log('FormContext.Consumer');
@@ -40,7 +40,7 @@ export default function (props) {
     <h1>Form:</h1>
 
 
-    {/* <Form forRecord={organization} onChange={onChange}> */}
+    {/* <Form forRecord={project} onChange={onChange}> */}
       {/* <FormContext.Consumer>
         {(contextProps) => {console.dir(`consuming... ${JSON.stringify(contextProps)}`)}}
       </FormContext.Consumer> */}

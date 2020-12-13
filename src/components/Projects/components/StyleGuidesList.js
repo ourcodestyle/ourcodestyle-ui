@@ -25,7 +25,7 @@ class StyleGuidesList extends React.Component {
                 <tr key={i}>
                   <td>{styleGuide.language}</td>
                   <td>
-                    <Link to={`/organizations/${styleGuide.organizationDomain}/style-guides/${styleGuide.id}`}>
+                    <Link to={`/projects/${styleGuide.projectDomain}/style-guides/${styleGuide.id}`}>
                       {styleGuide.name}
                     </Link>
                   </td>

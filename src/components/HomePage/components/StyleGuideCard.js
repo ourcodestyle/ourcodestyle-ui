@@ -12,7 +12,7 @@ class StyleGuideCard extends React.Component {
   }
 
   render() {
-    const { id, name, language, organization } = this.props
+    const { id, name, language, project } = this.props
 
     let converImageUrl = "/images/style-guide-covers/default.png"
 
@@ -21,11 +21,11 @@ class StyleGuideCard extends React.Component {
     }
 
     return <Card elevation={Elevation.TWO} style={{textAlign: 'center' }}>
-      <Link to={`/organizations/${organization.domain}/style-guides/${id}`}>
+      <Link to={`/projects/${project.domain}/style-guides/${id}`}>
         <img src={converImageUrl} style={{width: 200}} />
         <h5 style={{ marginTop: 20 }}>{name}</h5>
       </Link>
-      Organization: <Link to={`/organizations/${organization.domain}`}>{organization.name}</Link>
+      Project: <Link to={`/projects/${project.domain}`}>{project.name}</Link>
     </Card>
   }
 }
@@ -33,7 +33,7 @@ class StyleGuideCard extends React.Component {
 StyleGuideCard.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
-  organizationDomain: PropTypes.string
+  projectDomain: PropTypes.string
 }
 
 export default StyleGuideCard

@@ -5,10 +5,10 @@ import { withRouter } from 'react-router-dom'
 class ShowTabs extends React.Component {
 
   render() {
-    const { selectedTab, organizationDomain, canEdit, history } = this.props
+    const { selectedTab, projectDomain, canEdit, history } = this.props
 
     const handleTabChange = (selectedTabId) => {
-      history.push(`/organizations/${organizationDomain}/${selectedTabId}`)
+      history.push(`/projects/${projectDomain}/${selectedTabId}`)
     }
 
     return <Tabs onChange={handleTabChange} selectedTabId={selectedTab} large={true} animate={false}>

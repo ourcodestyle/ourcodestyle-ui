@@ -17,7 +17,7 @@ const VoteButton = (props) => {
   const icon = props.icon || "thumbs-up"
 
   const whoCanVote = styleGuide.whoCanVote
-  const isMember = (currentUser && !currentUser.isGuest) && _.includes(_.map(currentUser.memberships, 'organization.id'), styleGuide.organization.id)
+  const isMember = (currentUser && !currentUser.isGuest) && _.includes(_.map(currentUser.memberships, 'project.id'), styleGuide.project.id)
 
   let onClick
   if (currentUser.isGuest) {
@@ -27,9 +27,9 @@ const VoteButton = (props) => {
       onClick = () => actions.vote({ruleId, paramId, optionId, intent, allowMultipleValues})
     } else {
       const modalProps = {
-        organizationId: styleGuide.organization.id
+        projectId: styleGuide.project.id
       }
-      onClick = () => actions.openModal({ modalName: "RequestAccessToOrganization", modalProps })
+      onClick = () => actions.openModal({ modalName: "RequestAccessToProject", modalProps })
     }
   }
 

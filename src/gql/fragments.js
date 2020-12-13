@@ -77,8 +77,8 @@ export const USER = `
   }
 `
 
-export const ORGANIZATION = `
-  fragment ORGANIZATION on Organization {
+export const PROJECT = `
+  fragment PROJECT on Project {
     id
     name
     domain

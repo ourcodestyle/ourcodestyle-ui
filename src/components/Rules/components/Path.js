@@ -8,20 +8,20 @@ class Path extends React.Component {
   render() {
     const { styleGuide, rule } = this.props
     const category = rule.category
-    const organization = styleGuide.organization
+    const project = styleGuide.project
 
     let items = [
-      { text: organization.name,
-        href: `/organizations/${organization.domain}`
+      { text: project.name,
+        href: `/projects/${project.domain}`
       },
       { text: styleGuide.name,
-        href: `/organizations/${organization.domain}/style-guides/${styleGuide.id}`
+        href: `/projects/${project.domain}/style-guides/${styleGuide.id}`
       },
     ]
     if (category) {
       items.push({
         text: category.name,
-        href: `/organizations/${organization.domain}/style-guides/${styleGuide.id}#${category.name}`
+        href: `/projects/${project.domain}/style-guides/${styleGuide.id}#${category.name}`
       })
     }
     items.push({ text: rule.name })

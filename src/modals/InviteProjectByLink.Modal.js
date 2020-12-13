@@ -16,8 +16,8 @@ import {
 } from '@blueprintjs/core'
 
 const CREATE_INVITATION_GQL = gql`
-  mutation ($organizationId: ID!){
-    invitationCreate(organizationId: $organizationId){
+  mutation ($projectId: ID!){
+    invitationCreate(projectId: $projectId){
       id
       secret
       createdAt
@@ -29,9 +29,9 @@ const CREATE_INVITATION_GQL = gql`
   }
 `
 
-import {GQL_FRAGMENT_ACTIVE_INVITATIONS} from '~/components/Organizations/Show'
+import {GQL_FRAGMENT_ACTIVE_INVITATIONS} from '~/components/Projects/Show'
 
-class InviteOrganizationByLink extends React.Component {
+class InviteProjectByLink extends React.Component {
 
   componentWillMount() {
     this.setState({ loading: true })
@@ -39,22 +39,22 @@ class InviteOrganizationByLink extends React.Component {
   }
 
   async createInvitation(){
-    const {client, organization} = this.props
+    const {client, project} = this.props
 
     const mutation = CREATE_INVITATION_GQL
-    const variables = { organizationId: organization.id }
+    const variables = { projectId: project.id }
     const response = await client.mutate({ mutation, variables })
 
     const newInvitation = response.data.invitationCreate
 
-    const cacheId = client.cache.config.dataIdFromObject(organization)
+    const cacheId = client.cache.config.dataIdFromObject(project)
 
-    const organizationFragment = client.readFragment({
+    const projectFragment = client.readFragment({
       id: cacheId, // `id` is any id that could be returned by `dataIdFromObject`.
       fragment: GQL_FRAGMENT_ACTIVE_INVITATIONS
     })
 
-    const updatedFragment = { invitations: [ ...organizationFragment.invitations, newInvitation ], __typename: "Organization"  }
+    const updatedFragment = { invitations: [ ...projectFragment.invitations, newInvitation ], __typename: "Project"  }
     client.writeFragment({
       id: cacheId,
       fragment: GQL_FRAGMENT_ACTIVE_INVITATIONS,
@@ -85,7 +85,7 @@ class InviteOrganizationByLink extends React.Component {
             <div className={Classes.DIALOG_BODY}>
               { loading && "Loading ..." }
               { !loading && <div>
-                Share link below with a person you want to be on your organization
+                Share link below with a person you want to be on your project
                 <ControlGroup fill={true}>
                   <InputGroup style={{width: '432px', fontSize: '11px'}} value={link} readOnly />
                   <Button
@@ -103,4 +103,4 @@ class InviteOrganizationByLink extends React.Component {
 
 }
 
-export default compose(withRouter, withApollo)(InviteOrganizationByLink)
+export default compose(withRouter, withApollo)(InviteProjectByLink)

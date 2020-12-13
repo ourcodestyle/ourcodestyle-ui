@@ -10,10 +10,10 @@ import {
   FormSubmit
 } from '~/fuks'
 
-class InviteOrganizationByEmail extends React.Component {
+class InviteProjectByEmail extends React.Component {
 
   render(){
-    const { isOpen, closeModal, organization } = this.props
+    const { isOpen, closeModal, project } = this.props
 
 
     if (!isOpen) return null
@@ -29,8 +29,8 @@ class InviteOrganizationByEmail extends React.Component {
 
     return <Dialog icon="email" isOpen={isOpen} onClose={closeModal} title="Invite Members by Email">
             <div className="pt-dialog-body">
-              <Form forRecord={{ __typename: "EmailInvitationBatch", organizationId: organization.id }} extraQuery={extraQuery}>
-                <Input field="organizationId ID!" as="hidden" />
+              <Form forRecord={{ __typename: "EmailInvitationBatch", projectId: project.id }} extraQuery={extraQuery}>
+                <Input field="projectId ID!" as="hidden" />
                 <Input field="emails String!" as="textarea" label="List of Emails" placeholder="separate emails by comma or new line" />
                 <FormSubmit label="Send Invitations" />
               </Form>
@@ -40,4 +40,4 @@ class InviteOrganizationByEmail extends React.Component {
 
 }
 
-export default InviteOrganizationByEmail
+export default InviteProjectByEmail

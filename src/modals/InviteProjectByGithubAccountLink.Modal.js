@@ -14,10 +14,10 @@ import {
 
 import { AppToaster } from '~/components/toaster'
 
-class InviteOrganizationByGithubAccountLink extends React.Component {
+class InviteProjectByGithubAccountLink extends React.Component {
 
   render() {
-    const { isOpen, closeModal, organization } = this.props
+    const { isOpen, closeModal, project } = this.props
 
     if (!isOpen) return null
 
@@ -27,7 +27,7 @@ class InviteOrganizationByGithubAccountLink extends React.Component {
     }
 
     const extraQuery = `
-      organization {
+      project {
         id
         memberships {
           id
@@ -47,12 +47,12 @@ class InviteOrganizationByGithubAccountLink extends React.Component {
       }
     `
 
-    const record = { __typename: "PersonalInvitation", organizationId: organization.id }
+    const record = { __typename: "PersonalInvitation", projectId: project.id }
 
     return <Dialog isOpen={isOpen} onClose={closeModal} title="Add Member">
             <div className={Classes.DIALOG_BODY}>
               <Form forRecord={record} onSuccess={onSuccess} extraQuery={extraQuery}>
-                <Input field="organizationId ID!" as="hidden" />
+                <Input field="projectId ID!" as="hidden" />
                 <Input field="nickname String!" as="string" label="GitHub Nickname" autoFocus />
                 <FormSubmit label="Add Member" />
               </Form>
@@ -62,4 +62,4 @@ class InviteOrganizationByGithubAccountLink extends React.Component {
 
 }
 
-export default InviteOrganizationByGithubAccountLink
+export default InviteProjectByGithubAccountLink

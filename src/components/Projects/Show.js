@@ -36,7 +36,7 @@ import {USER} from '~/gql/fragments'
 import UserIconWithName from '~/pure/UserIconWithName'
 
 export const GQL_FRAGMENT_ACTIVE_INVITATIONS = gql`
-  fragment ActiveInvitaions on Organization {
+  fragment ActiveInvitaions on Project {
     invitations(active: true) {
       id
       secret
@@ -49,9 +49,9 @@ export const GQL_FRAGMENT_ACTIVE_INVITATIONS = gql`
   }
 `
 
-const ORGANIZATION_QUERY = gql`
-  query readOrganization($domain: String!){
-    organization(domain: $domain){
+const PROJECT_QUERY = gql`
+  query readProject($domain: String!){
+    project(domain: $domain){
       id
       name
       domain
@@ -65,7 +65,7 @@ const ORGANIZATION_QUERY = gql`
         language
         linter
         isPublic
-        organization {
+        project {
           id
           domain
         }
@@ -99,7 +99,7 @@ const ORGANIZATION_QUERY = gql`
 
 const UPLOAD_LOGO_GQL = gql`
   mutation($id: ID!, $file: Upload!) {
-    organizationLogoUpload(id: $id, file: $file) {
+    projectLogoUpload(id: $id, file: $file) {
       id
       logoUrl
     }
@@ -119,36 +119,36 @@ const buildLink = (secret) => `${window.location.origin}/authLink/${secret}`
 
 class Show extends React.Component {
 
-  dashboardTab(organization){
+  dashboardTab(project){
     return <div style={{display: 'grid', gridTemplateColumns: '500px 1fr', gridColumnGap: '60px', width: '100%' }}>
-      {this.styleGuidesTab(organization)}
-      {this.activityTab(organization)}
+      {this.styleGuidesTab(project)}
+      {this.activityTab(project)}
     </div>
   }
 
-  styleGuidesTab(organization){
+  styleGuidesTab(project){
 
     const { currentUserCan } = this.props
 
     const addStyleGuide = () => {
       this.props.actions.openModal({modalName: "CreateStyleGuide",
-      modalProps: { organizationId: organization.id, organizationDomain: organization.domain }})
+      modalProps: { projectId: project.id, projectDomain: project.domain }})
     }
 
-    const maxStyleGuidesReached = organization.styleGuides.length >= organization.maxStyleGuidesCount;
+    const maxStyleGuidesReached = project.styleGuides.length >= project.maxStyleGuidesCount;
 
     return <div>
         <h2 className="section-title">Style Guides</h2>
         <HTMLTable bordered striped>
           <tbody>
-          { organization.styleGuides.map((styleGuide) => (
+          { project.styleGuides.map((styleGuide) => (
             <tr key={styleGuide.id}>
               <td>
                 <StyleGuideIcon style={{height: 32}} styleGuide={styleGuide} />
                 { !styleGuide.isPublic && <Icon color="#555" icon="lock" title="private" style={{ position: 'absolute', marginLeft: -5, marginTop: 20 }} /> }
               </td>
               <td>
-              <Link to={`/organizations/${styleGuide.organization.domain}/style-guides/${styleGuide.id}`}>
+              <Link to={`/projects/${styleGuide.project.domain}/style-guides/${styleGuide.id}`}>
                 {styleGuide.name}
               </Link>
               </td>
@@ -160,7 +160,7 @@ class Show extends React.Component {
           </tbody>
         </HTMLTable>
 
-        { currentUserCan({organization})("addStyleGuide") &&
+        { currentUserCan({project})("addStyleGuide") &&
           <div>
             <Button
               disabled={maxStyleGuidesReached}
@@ -169,63 +169,63 @@ class Show extends React.Component {
               text="Add Style Guide"
               icon="add"
               />
-            { maxStyleGuidesReached && <div className="small-notice">max limit reached ({organization.maxStyleGuidesCount})</div> }
+            { maxStyleGuidesReached && <div className="small-notice">max limit reached ({project.maxStyleGuidesCount})</div> }
           </div>
         }
     </div>
   }
 
-  activityTab(organization){
-    const scope = { organizationId: { value: organization.id, type: 'ID!' } }
+  activityTab(project){
+    const scope = { projectId: { value: project.id, type: 'ID!' } }
     return <div>
       <h2 className="section-title">Activity</h2>
       <Activity scope={scope} />
     </div>
   }
 
-  membersTab(organization){
-    const organizationId = organization.id
-    const domain = this.props.match.params.organizationDomain
+  membersTab(project){
+    const projectId = project.id
+    const domain = this.props.match.params.projectDomain
     const { actions, currentUser } = this.props
 
     const onRevokeSuccess = (cache, { data: { revokeInvitation } }) => {
-      let data = cache.readQuery({ query: ORGANIZATION_QUERY, variables: { domain } })
-      data.organization.invitations = _.reject(data.organization.invitations, {id: revokeInvitation.id})
+      let data = cache.readQuery({ query: PROJECT_QUERY, variables: { domain } })
+      data.project.invitations = _.reject(data.project.invitations, {id: revokeInvitation.id})
       cache.writeQuery({
-        query: ORGANIZATION_QUERY,
+        query: PROJECT_QUERY,
         variables: { domain },
         data
       })
     }
 
-    const organizationPolicy = policy(currentUser, organization).organization
+    const projectPolicy = policy(currentUser, project).project
 
     return <div style={{ display: 'grid', gridTemplateColumns: '400px 1fr' }}>
         <div>
           <MembersList
-            organizationDomain={organization.domain}
-            canAssignRole={organizationPolicy.canAssignRole()}
+            projectDomain={project.domain}
+            canAssignRole={projectPolicy.canAssignRole()}
             />
         </div>
         <div>
-            { organizationPolicy.canInviteMembers() &&
+            { projectPolicy.canInviteMembers() &&
           <div>
             <h3>Add Members</h3>
             <div>
               <Button
                 text="Invite by Special Link"
-                onClick={() => actions.openModal({modalName: "InviteOrganizationByLink", modalProps: {organization}})}
+                onClick={() => actions.openModal({modalName: "InviteProjectByLink", modalProps: {project}})}
               />
             </div>
             <div style={{ marginTop: 5 }}>
             <Button
                 text="Add by GitHub Account"
-                onClick={() => actions.openModal({modalName: "InviteOrganizationByGithubAccountLink", modalProps: {organization}})}
+                onClick={() => actions.openModal({modalName: "InviteProjectByGithubAccountLink", modalProps: {project}})}
               />
             </div>
           </div>
           }
-          { organizationPolicy.canInviteMembers() &&
+          { projectPolicy.canInviteMembers() &&
           <div>
             <h3 style={{ marginTop: 50 }}>Active Invitation Links</h3>
             <HTMLTable striped bordered>
@@ -236,7 +236,7 @@ class Show extends React.Component {
                 </tr>
               </thead>
               <tbody>
-              {organization.invitations.map(invitation => <tr key={invitation.id}>
+              {project.invitations.map(invitation => <tr key={invitation.id}>
                 <td><TimeAgo date={invitation.createdAt} /></td>
                 <td>
                   <a href={buildLink(invitation.secret)}>{invitation.secret}</a>
@@ -270,69 +270,69 @@ class Show extends React.Component {
     </div>
   }
 
-  settingsTab(organization){
+  settingsTab(project){
     return <div>Settings</div>
   }
 
-  editOrganizationForm(organization){
+  editProjectForm(project){
 
   }
 
-  organizationHead(organization){
+  projectHead(project){
     const { actions, currentUserCan } = this.props
 
-    const canEdit = currentUserCan({organization})("edit")
+    const canEdit = currentUserCan({project})("edit")
 
-    let logo = <div className="organization-logo-holder">
-      <img src={organization.logoUrl || '/images/organization-no-logo.png'}  />
+    let logo = <div className="project-logo-holder">
+      <img src={project.logoUrl || '/images/project-no-logo.png'}  />
     </div>
 
     if (canEdit) {
       logo = <Mutation mutation={UPLOAD_LOGO_GQL}>
         {(uploadLogo, { data }) => (
-          <div className="organization-logo-holder">
+          <div className="project-logo-holder">
                 <input
                   onChange={({ target: { validity, files } }) =>
-                        validity.valid && uploadLogo({ variables: { id: organization.id, file: files[0] } })
+                        validity.valid && uploadLogo({ variables: { id: project.id, file: files[0] } })
                       }
                   id="upload-logo-file" type="file" name="file" style={{display: 'none'}} />
                 <label htmlFor="upload-logo-file" className="edit-cover">
                   Change
                 </label>
-            <img src={organization.logoUrl || '/images/organization-no-logo.png'}  />
+            <img src={project.logoUrl || '/images/project-no-logo.png'}  />
           </div>
         )}
       </Mutation>
     }
 
-    return <div className="organization-logo-and-name-container">
-            <div className="organization-logo-and-name">
+    return <div className="project-logo-and-name-container">
+            <div className="project-logo-and-name">
               { logo }
               <div>
-                <h1 className="organization-name">{organization.name}</h1>
+                <h1 className="project-name">{project.name}</h1>
                 { canEdit &&
                     <Button
                       style={{ display: 'inline-block', marginBottom: 20 }}
-                      text="Edit Organization Profile"
+                      text="Edit Project Profile"
                       icon="edit"
-                      onClick={() => actions.openModal({modalName: "EditOrganizationProfile", modalProps: {organization}}) }
+                      onClick={() => actions.openModal({modalName: "EditProjectProfile", modalProps: {project}}) }
                     />
                 }
-                { organization.description && <div>{organization.description}</div> }
+                { project.description && <div>{project.description}</div> }
               </div>
             </div>
           </div>
   }
 
   render() {
-    const domain = this.props.match.params.organizationDomain
+    const domain = this.props.match.params.projectDomain
     const currentUser = this.props.currentUser
 
     const selectedTab = this.props.match.path.split('/')[3] || 'dashboard'
 
     return <Query
       variables={{domain}}
-      query={ORGANIZATION_QUERY}
+      query={PROJECT_QUERY}
     >
       {({ loading, error, data }) => {
         if (loading) return <p>Loading...</p>;
@@ -340,23 +340,23 @@ class Show extends React.Component {
           return <p>Error :(</p>
         }
 
-        const organization = data.organization
+        const project = data.project
 
         let tabContent = null
         if (selectedTab == 'dashboard'){
-          tabContent = this.dashboardTab(organization)
+          tabContent = this.dashboardTab(project)
         } else if (selectedTab == 'members'){
-          tabContent = this.membersTab(organization)
+          tabContent = this.membersTab(project)
         } else if (selectedTab == 'settings'){
-          tabContent = this.settingsTab(organization)
+          tabContent = this.settingsTab(project)
         }
 
 
         return <div>
-          <div className="organization-title">
-            { this.organizationHead(organization) }
-            <div className="organization-tabs">
-              <ShowTabs organizationDomain={organization.domain} selectedTab={selectedTab} canEdit={false} />
+          <div className="project-title">
+            { this.projectHead(project) }
+            <div className="project-tabs">
+              <ShowTabs projectDomain={project.domain} selectedTab={selectedTab} canEdit={false} />
             </div>
           </div>
           { tabContent }

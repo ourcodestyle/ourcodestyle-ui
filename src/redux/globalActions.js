@@ -9,7 +9,7 @@ const ns = namespace('global')
 export const openModal = createAction(ns('openModal'), ['modalName', 'modalProps'], { defaults: { modalProps: {} } })
 export const closeModal = createAction(ns('closeModal'))
 
-export const cloneStyleGuide = createRequestActions(ns('cloneStyleGuide'), ['styleGuideId', 'organizationId'])
+export const cloneStyleGuide = createRequestActions(ns('cloneStyleGuide'), ['styleGuideId', 'projectId'])
 
 export const mutationSuccess = createAction(ns('mutationSuccess'), ['action', 'data'])
 export const like = createAction(ns('like'), ['likeableType', 'likeableId', 'likesCount'])

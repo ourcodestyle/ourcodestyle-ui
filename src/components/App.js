@@ -12,7 +12,7 @@ FocusStyleManager.onlyShowFocusOnTabs()
 
 import {
   USER,
-  ORGANIZATION,
+  PROJECT,
 } from '~/gql/fragments'
 
 export const PROFILE_QUERY = `
@@ -22,8 +22,8 @@ export const PROFILE_QUERY = `
       memberships {
         id
         role
-        organization {
-          ... ORGANIZATION
+        project {
+          ... PROJECT
           styleGuides {
             id
             name
@@ -34,13 +34,13 @@ export const PROFILE_QUERY = `
       }
       membershipRequests {
         id
-        organizationId
+        projectId
         status
       }
     }
   }
   ${USER}
-  ${ORGANIZATION}
+  ${PROJECT}
 `
 
 class App extends QueryComponent {

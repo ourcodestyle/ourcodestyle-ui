@@ -4,7 +4,7 @@ import {
   createRequestActions,
 } from '~/utils/actions'
 
-const ns = namespace('Organizations')
+const ns = namespace('Projects')
 
 export const fieldChange = createAction(ns('fieldChange'), ['path', 'value'])
 

@@ -25,7 +25,7 @@ const extraQuery = `
       memberships {
         id
         role
-        organization {
+        project {
           id
         }
       }
@@ -33,11 +33,11 @@ const extraQuery = `
   }
 `
 
-const organization = {
-  __typename: "Organization"
+const project = {
+  __typename: "Project"
 }
 
-class CreateOrganizationModal extends React.Component {
+class CreateProjectModal extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -46,8 +46,8 @@ class CreateOrganizationModal extends React.Component {
     }
   }
 
-  onSuccess(organization) {
-    this.props.history.push(`/organizations/${organization.domain}`)
+  onSuccess(project) {
+    this.props.history.push(`/projects/${project.domain}`)
     this.props.closeModal()
   }
 
@@ -66,8 +66,8 @@ class CreateOrganizationModal extends React.Component {
     }
 
     return (
-      <Dialog icon="add" isOpen={isOpen} onClose={closeModal} title="New Organization">
-        <Form forRecord={organization} onSuccess={this.onSuccess.bind(this)} extraQuery={extraQuery} onChange={onChange}>
+      <Dialog icon="add" isOpen={isOpen} onClose={closeModal} title="New Project">
+        <Form forRecord={project} onSuccess={this.onSuccess.bind(this)} extraQuery={extraQuery} onChange={onChange}>
           <div className={Classes.DIALOG_BODY}>
             <Errors />
             <Input field="name String!"       label="Name" autoFocus />
@@ -86,4 +86,4 @@ class CreateOrganizationModal extends React.Component {
   }
 }
 
-export default withRouter(CreateOrganizationModal)
+export default withRouter(CreateProjectModal)

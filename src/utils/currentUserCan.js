@@ -2,7 +2,7 @@ import _ from 'lodash'
 
 const currentUserCan = (currentUser) => (assets) => (action, record) => {
     const {
-      organization,
+      project,
       styleGuide,
     } = assets
 
@@ -10,18 +10,18 @@ const currentUserCan = (currentUser) => (assets) => (action, record) => {
     let isMember = false
     let isCreator = false
 
-    let organizationId
-    if (organization) {
-      organizationId = organization.id
+    let projectId
+    if (project) {
+      projectId = project.id
     } else if (styleGuide) {
-      organizationId = styleGuide.organizationId
+      projectId = styleGuide.projectId
     }
 
-    if (organizationId) {
+    if (projectId) {
       const hasRole = role =>
         _.includes(
-          _.map(_.filter(currentUser.memberships, {role}), m => parseInt(m.organization.id)),
-          parseInt(organizationId)
+          _.map(_.filter(currentUser.memberships, {role}), m => parseInt(m.project.id)),
+          parseInt(projectId)
         )
       isAdmin = hasRole('admin')
       isMember = hasRole('user')

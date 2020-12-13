@@ -30,8 +30,8 @@ import {
 import { parseErrorMessage } from '~/utils/apiUtils'
 
 const ASSIGN_ROLE_GQL = gql`
-  mutation($userId: ID!, $organizationId: ID!, $role: MemberRole!) {
-    assignRole(userId: $userId, organizationId: $organizationId, role: $role) {
+  mutation($userId: ID!, $projectId: ID!, $role: MemberRole!) {
+    assignRole(userId: $userId, projectId: $projectId, role: $role) {
       id
       role
     }
@@ -39,25 +39,25 @@ const ASSIGN_ROLE_GQL = gql`
 `
 
 import UserIconWithName from '~/pure/UserIconWithName'
-import { ORGANIZATION_MEMBERS } from '~/gql/organization'
+import { PROJECT_MEMBERS } from '~/gql/project'
 
 class MembersList extends QueryComponent {
 
   query(){
-    return ORGANIZATION_MEMBERS
+    return PROJECT_MEMBERS
   }
 
   queryVariables(){
-    return { domain: this.props.organizationDomain }
+    return { domain: this.props.projectDomain }
   }
 
   queryLoaded(data) {
     this.setState({
-      organizationId: data.organization.id,
-      createdByUserId: data.organization.createdByUserId,
-      memberships: data.organization.memberships,
-      pendingInvitations: data.organization.personalInvitations,
-      membershipRequests: data.organization.membershipRequests,
+      projectId: data.project.id,
+      createdByUserId: data.project.createdByUserId,
+      memberships: data.project.memberships,
+      pendingInvitations: data.project.personalInvitations,
+      membershipRequests: data.project.membershipRequests,
     })
   }
 
@@ -72,7 +72,7 @@ class MembersList extends QueryComponent {
       memberships,
       pendingInvitations,
       membershipRequests,
-      organizationId
+      projectId
     } = this.state
 
     const revokeInvitation = async (id) => {
@@ -80,7 +80,7 @@ class MembersList extends QueryComponent {
         mutation ($id: ID!) {
           revokePersonalInvitation(id: $id) {
             id
-            organization {
+            project {
               id
               personalInvitations(status: "pending") {
                 id
@@ -101,7 +101,7 @@ class MembersList extends QueryComponent {
           declineMembershipRequest(id: $id) {
             id
             status
-            organization {
+            project {
               id
               membershipRequests(status: "pending") {
                 id
@@ -130,7 +130,7 @@ class MembersList extends QueryComponent {
       modalName: "ConfirmDelete",
       modalProps: {
         action: removeMembership({ id: member.id }),
-        content: `Are you sure you want to remove user ${member.user.nickname} from this Organization?`
+        content: `Are you sure you want to remove user ${member.user.nickname} from this Project?`
       }
     })
 
@@ -161,7 +161,7 @@ class MembersList extends QueryComponent {
                         >
                         {(assignRole, { data, loading, error }) => (
                           <RadioGroup
-                            onChange={(event) => assignRole({variables: { userId: member.user.id, organizationId, role: event.target.value }}) }
+                            onChange={(event) => assignRole({variables: { userId: member.user.id, projectId, role: event.target.value }}) }
                             selectedValue={member.role}
                           >
                             {error && <Callout intent={Intent.DANGER} title="Failed" style={{marginBottom: 20}}>
@@ -169,7 +169,7 @@ class MembersList extends QueryComponent {
                             </Callout>
                             }
                             <Radio value="admin" large labelElement={<Callout title="Admin" className="selectable-callout" intent={ member.role == "admin" ? Intent.PRIMARY : null} icon={null}>
-                            Can change organization settings, can invite users, can change user roles, can remove users.
+                            Can change project settings, can invite users, can change user roles, can remove users.
                             Can moderate other users activities (style-guides, rules, comments)
                           </Callout>}
                             />
@@ -251,7 +251,7 @@ class MembersList extends QueryComponent {
         acceptMembershipRequest(id: $id) {
           id
           status
-          organization {
+          project {
             id
             membershipRequests(status: "pending") {
               id
@@ -277,7 +277,7 @@ class MembersList extends QueryComponent {
 }
 
 MembersList.propTypes = {
-  organizationDomain: PropTypes.string.isRequired,
+  projectDomain: PropTypes.string.isRequired,
   canAssignRole: PropTypes.bool,
 }
 

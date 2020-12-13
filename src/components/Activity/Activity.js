@@ -26,9 +26,9 @@ class Activity extends QueryComponent {
 
   query() {
     const scope = this.props.scope || {}
-    // eg "$organizationId: ID!"
+    // eg "$projectId: ID!"
     const conditionTypes = _.map(scope, (data,key) => `$${key}: ${data.type}`).join(', ')
-    // eg "organizationId: $organizationId"
+    // eg "projectId: $projectId"
     const conditionPlaceholders = _.map(scope, (_data,key) => `${key}: $${key}`).join(', ')
 
     const queryArgsConfig = _.compact([conditionTypes, '$perPage: Int', '$page: Int']).join(", ")
@@ -88,7 +88,7 @@ class Activity extends QueryComponent {
           user {
             ... USER
           }
-          organization {
+          project {
             id
             name
             domain
@@ -169,7 +169,7 @@ class Activity extends QueryComponent {
     const commnent = activity.trackable
     const option = commnent.commentable
     const rule = option.param.rule
-    let linkParts = ['organizations', activity.organization.domain, 'style-guides', activity.styleGuide.id, 'rules', rule.id]
+    let linkParts = ['projects', activity.project.domain, 'style-guides', activity.styleGuide.id, 'rules', rule.id]
     const link = '/' + linkParts.join('/')
 
     let icon = null
@@ -203,7 +203,7 @@ class Activity extends QueryComponent {
     const rule = param.rule
     const styleGuide = activity.styleGuide
 
-    let linkParts = ['organizations', activity.organization.domain, 'style-guides', activity.styleGuide.id, 'rules', rule.id]
+    let linkParts = ['projects', activity.project.domain, 'style-guides', activity.styleGuide.id, 'rules', rule.id]
     const link = '/' + linkParts.join('/')
 
     let votedFor = null

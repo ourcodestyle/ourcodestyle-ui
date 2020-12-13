@@ -196,7 +196,7 @@ class RuleShow extends QueryComponent {
 
     const openRuleDetails = () => {
       console.log('openRuleDetails')
-      const location = `/organizations/${rule.styleGuide.organization.domain}/style-guides/${styleGuideId}/rules/${ruleId}/details`
+      const location = `/projects/${rule.styleGuide.project.domain}/style-guides/${styleGuideId}/rules/${ruleId}/details`
       history.push(location)
     }
 

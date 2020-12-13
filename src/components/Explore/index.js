@@ -10,8 +10,8 @@ class Explore extends QueryComponent {
 
   query() {
     return `
-      query organization($domain: String!) {
-        organization(domain: $domain) {
+      query project($domain: String!) {
+        project(domain: $domain) {
           id
           name
           domain
@@ -19,7 +19,7 @@ class Explore extends QueryComponent {
             id
             name
             linter
-            organization {
+            project {
               id
               name
               domain
@@ -30,7 +30,7 @@ class Explore extends QueryComponent {
           id
           name
           linter
-          organization {
+          project {
             id
             name
             domain
@@ -44,13 +44,13 @@ class Explore extends QueryComponent {
     return { domain: 'master' }
   }
 
-  renderTable(styleGuides, organization){
+  renderTable(styleGuides, project){
     return <HTMLTable bordered striped>
     <thead>
       <tr>
         <td>Linter</td>
         <td>Guide Name</td>
-        <td>Organization</td>
+        <td>Project</td>
       </tr>
     </thead>
     <tbody>
@@ -58,11 +58,11 @@ class Explore extends QueryComponent {
         return <tr key={styleGuide.id}>
           <td>{styleGuide.linter ? styleGuide.linter : <i>none</i> }</td>
           <td>
-            <Link to={`/organizations/${styleGuide.organization.domain}/style-guides/${styleGuide.id}`}>
+            <Link to={`/projects/${styleGuide.project.domain}/style-guides/${styleGuide.id}`}>
               {styleGuide.name}
             </Link>
           </td>
-          <td>{styleGuide.organization.name}</td>
+          <td>{styleGuide.project.name}</td>
         </tr>
       }) }
     </tbody>
@@ -72,7 +72,7 @@ class Explore extends QueryComponent {
   content(){
     return <div style={{ margin: 'auto', width: 300, textAlign: 'center' }}>
       <h1 className="section-title">Master Style Guides</h1>
-      {this.renderTable(this.state.organization.styleGuides)}
+      {this.renderTable(this.state.project.styleGuides)}
 
       <h1 className="section-title">Community Style Guides</h1>
       {this.renderTable(this.state.communityStyleGuides)}

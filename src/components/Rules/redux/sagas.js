@@ -208,7 +208,7 @@ function* deleteRule({ id }) {
           rules {
             id
           }
-          organization {
+          project {
             id
             domain
           }
@@ -221,7 +221,7 @@ function* deleteRule({ id }) {
   try {
     const result = yield call(apolloClient.mutate, { mutation, variables })
     const rule = result.data.deleteRule
-    yield put(push(`/organizations/${rule.styleGuide.organization.domain}/style-guides/${rule.styleGuide.id}`))
+    yield put(push(`/projects/${rule.styleGuide.project.domain}/style-guides/${rule.styleGuide.id}`))
   } catch(error) {
     const message = parseErrorMessage(error)
     AppToaster.show({ message, intent: Intent.DANGER })

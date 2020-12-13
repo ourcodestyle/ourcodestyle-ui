@@ -40,7 +40,7 @@ class ParamsSelector extends React.Component {
     // }
 
     const openParam = (id) => {
-      const location = `/organizations/${rule.styleGuide.organization.domain}/style-guides/${rule.styleGuide.id}/rules/${rule.id}/${id}`
+      const location = `/projects/${rule.styleGuide.project.domain}/style-guides/${rule.styleGuide.id}/rules/${rule.id}/${id}`
       history.push(location)
     }
 
@@ -65,7 +65,7 @@ class ParamsSelector extends React.Component {
   //   displayParams = _.sortBy(displayParams, 'id')
 
   //   const openOption = (optionId) => {
-  //     const location = `/organizations/${rule.styleGuide.organization.domain}/style-guides/${rule.styleGuide.id}/rules/${rule.id}/${optionId}`
+  //     const location = `/projects/${rule.styleGuide.project.domain}/style-guides/${rule.styleGuide.id}/rules/${rule.id}/${optionId}`
   //     history.push(location)
   //   }
 
