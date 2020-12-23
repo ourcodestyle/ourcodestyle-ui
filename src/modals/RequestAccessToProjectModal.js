@@ -12,7 +12,7 @@ import {
   Classes,
 } from '@blueprintjs/core'
 
-import { withCurrentUser } from '../components/Projects/node_modules/~/contexts'
+import { withCurrentUser } from '~/contexts'
 import {
   Form,
   Input,

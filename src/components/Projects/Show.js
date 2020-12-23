@@ -176,7 +176,7 @@ class Show extends React.Component {
   }
 
   activityTab(project){
-    const scope = { projectId: { value: project.id, type: 'ID!' } }
+    const scope = { projectId: { value: project.id, type: 'ID' } }
     return <div>
       <h2 className="section-title">Activity</h2>
       <Activity scope={scope} />

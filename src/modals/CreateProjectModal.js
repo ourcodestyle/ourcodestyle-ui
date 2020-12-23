@@ -74,6 +74,11 @@ class CreateProjectModal extends React.Component {
             <Input field="domain String!"     label="Short Name for URL" value={this.state.domain} />
             <Input field="website String"     label="Website" />
             <Input field="description String" label="Description" as="textarea" />
+
+            <h4>Linters (can be added later):</h4>
+            <Input field="addStyleGuideRubocop Boolean" label="RuboCop" as="switch" />
+            <Input field="addStyleGuideEslint Boolean" label="ESLint" as="switch" />
+            <Input field="addStyleGuideFreeForm Boolean" label="Free Form" as="switch" />
           </div>
           <div className={Classes.DIALOG_FOOTER}>
             <div className={Classes.DIALOG_FOOTER_ACTIONS}>
