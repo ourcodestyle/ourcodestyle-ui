@@ -51,7 +51,6 @@ class Header extends React.Component {
 
     const menu = (
       <Menu>
-        <MenuItem icon="dashboard" onClick={redirectTo("/dashboard")} text="Dashboard" />
         <MenuItem icon="mugshot" onClick={redirectTo(`/users/${currentUser.nickname}`)} text="Your Profile" />
         <MenuDivider />
         <MenuItem icon="log-out" text="Sign out" onClick={signOut} />

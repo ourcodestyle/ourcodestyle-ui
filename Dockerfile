@@ -1,5 +1,5 @@
 # Stage 1 - the build process
-FROM node:boron as build-deps
+FROM node:15.5.0-buster as build-deps
 WORKDIR /usr/src/app
 COPY . .
 # RUN npm install babel-node

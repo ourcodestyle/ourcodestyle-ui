@@ -7,7 +7,6 @@ import {
   FormGroup,
   TextArea,
   InputGroup,
-  Switch,
 } from '@blueprintjs/core'
 
 import Select from '~/pure/Select'
@@ -25,11 +24,13 @@ const InputTypes = [
   'radio',
   'select',
   'textarea',
+  'switch'
 ]
 
 import YamlText from './inputs/YamlText'
 import YamlList from './inputs/YamlList'
 import YamlPair from './inputs/YamlPair'
+import Switch from './inputs/Switch'
 
 class Input extends React.Component {
 
@@ -63,16 +64,19 @@ class Input extends React.Component {
       hideOptionalLabel,
       disabled,
       optionalLabel,
+      fieldsConfig
     } = this.props
 
     const [fieldName, fieldType] = _.split(field, ' ')
-    const isRequired = _.endsWith(fieldType, "!")
+    const fieldConfig = fieldsConfig[fieldName]
+    const { isRequired, isArray } = fieldConfig
 
     if (typeof(label) === 'undefined'){
       label = _.capitalize(fieldName)
     }
 
     const value = this.props.hasOwnProperty('value') ? this.props.value : form[fieldName]
+    const formValue = form[fieldName]
 
     const fieldError = _.find(errors, {field: fieldName})
 
@@ -111,7 +115,12 @@ class Input extends React.Component {
       return <YamlPair {...inputProps} />
     } else if (as === "switch") {
       return <FormGroup>
-        <Switch label={label} defaultChecked={inputProps.value} onChange={inputProps.onChange} {..._.omit(inputProps, 'value')}  />
+        <Switch
+          label={label}
+          inputProps={inputProps}
+          fieldConfig={fieldConfig}
+          formValue={formValue}
+        />
       </FormGroup>
     } else {
       input = <InputGroup {...inputProps} />

@@ -41,7 +41,6 @@ class CreateProjectModal extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      domain: "",
       wasManualDomainChange: false
     }
   }
@@ -55,13 +54,18 @@ class CreateProjectModal extends React.Component {
     const { isOpen, closeModal } = this.props
     if (!isOpen) return null
 
-    const onChange = (fieldName, value) => {
+    const onChange = (fieldName, value, setFormField) => {
       if (fieldName === 'name' && !this.state.wasManualDomainChange) {
         const domain = _.toLower(slugify(value))
-        this.setState({ domain })
+        // setFormField('domain', domain)
+        return {
+          setForm: (form) => {
+            return Object.assign({}, form, { domain })
+          }
+        }
       }
       if (fieldName === 'domain') {
-        this.setState({ domain: value, wasManualDomainChange: true })
+        this.setState({ wasManualDomainChange: true })
       }
     }
 
@@ -71,14 +75,14 @@ class CreateProjectModal extends React.Component {
           <div className={Classes.DIALOG_BODY}>
             <Errors />
             <Input field="name String!"       label="Name" autoFocus />
-            <Input field="domain String!"     label="Short Name for URL" value={this.state.domain} />
+            <Input field="domain String!"     label="Short Name for URL" />
             <Input field="website String"     label="Website" />
             <Input field="description String" label="Description" as="textarea" />
 
             <h4>Linters (can be added later):</h4>
-            <Input field="addStyleGuideRubocop Boolean" label="RuboCop" as="switch" />
-            <Input field="addStyleGuideEslint Boolean" label="ESLint" as="switch" />
-            <Input field="addStyleGuideFreeForm Boolean" label="Free Form" as="switch" />
+            <Input field="addStyleGuides [String!]" value="rubocop" label="RuboCop" as="switch" />
+            <Input field="addStyleGuides [String!]" value="eslint" label="ESLint" as="switch" />
+            <Input field="addStyleGuides [String!]" value="free_form" label="Free Form" as="switch" />
           </div>
           <div className={Classes.DIALOG_FOOTER}>
             <div className={Classes.DIALOG_FOOTER_ACTIONS}>

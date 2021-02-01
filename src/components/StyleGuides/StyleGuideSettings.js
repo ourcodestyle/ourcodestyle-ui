@@ -22,7 +22,7 @@ import StyleGuideGQL from './styleGuide.gql'
 
 class StyleGuideSettings extends QueryComponent {
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = { ...this.state, panel: "general" }
   }
@@ -31,19 +31,19 @@ class StyleGuideSettings extends QueryComponent {
     return StyleGuideGQL
   }
 
-  queryOptions(){
+  queryOptions() {
     return { fetchPolicy: "network-only" }
   }
 
-  queryVariables(){
+  queryVariables() {
     return { id: this.props.styleGuideId }
   }
 
-  queryLoaded({styleGuide}) {
+  queryLoaded({ styleGuide }) {
     this.setState({ styleGuide, isPublic: styleGuide.isPublic })
   }
 
-  content(){
+  content() {
     const panel = this.state.panel
 
     const openPanel = (panel) => () => {
@@ -61,18 +61,18 @@ class StyleGuideSettings extends QueryComponent {
             </Menu>
           </div>
           <div>
-            { panel === 'general' && this.panelGeneral() }
-            { panel === 'consensus-rules' && this.panelConsensusRules() }
-            { panel === 'privacy' && this.panelPrivacy() }
+            {panel === 'general' && this.panelGeneral()}
+            {panel === 'consensus-rules' && this.panelConsensusRules()}
+            {panel === 'privacy' && this.panelPrivacy()}
           </div>
         </div>
       </div>
-      </div>
+    </div>
   }
 
   panelGeneral() {
     const onSuccess = () => {
-      AppToaster.show({ message: "Updated", intent: 'success'})
+      AppToaster.show({ message: "Updated", intent: 'success' })
     }
     return <div>
       <div className="settings-panel-header">General</div>
@@ -80,10 +80,10 @@ class StyleGuideSettings extends QueryComponent {
     </div>
   }
 
-  panelConsensusRules(){
+  panelConsensusRules() {
 
     const onSuccess = () => {
-      AppToaster.show({ message: "Updated", intent: 'success'})
+      AppToaster.show({ message: "Updated", intent: 'success' })
     }
 
     const record = this.state.styleGuide.consensusConfig
@@ -93,8 +93,8 @@ class StyleGuideSettings extends QueryComponent {
       <Form forRecord={record} onSuccess={onSuccess} dontResetFieldsOnSubmit>
         <div className={Classes.DIALOG_BODY}>
           <Errors />
-          <Input field="minWinVotes Int!" label="Minimal votes to win" inputProps={{ style: {width: 50} }} />
-          <Input field="minWinMargin Int!" label="Minimal win margin" inputProps={{ style: {width: 50} }}  />
+          <Input field="minWinVotes Int!" label="Minimal votes to win" inputProps={{ style: { width: 50 } }} />
+          <Input field="minWinMargin Int!" label="Minimal win margin" inputProps={{ style: { width: 50 } }} />
         </div>
         <div className={Classes.DIALOG_FOOTER}>
           <div className={Classes.DIALOG_FOOTER_ACTIONS}>
@@ -105,9 +105,9 @@ class StyleGuideSettings extends QueryComponent {
     </div>
   }
 
-  panelPrivacy(){
+  panelPrivacy() {
     const onSuccess = () => {
-      AppToaster.show({ message: "Updated", intent: 'success'})
+      AppToaster.show({ message: "Updated", intent: 'success' })
     }
 
     let onChange = (fieldName, value) => {
@@ -116,7 +116,8 @@ class StyleGuideSettings extends QueryComponent {
       }
     }
     onChange = onChange.bind(this)
-
+    console.log('this.state.styleGuide');
+    console.dir(this.state.styleGuide);
     return <div>
       <div className="settings-panel-header">Privacy</div>
 
@@ -124,8 +125,8 @@ class StyleGuideSettings extends QueryComponent {
         <Form forRecord={this.state.styleGuide} onSuccess={onSuccess} dontResetFieldsOnSubmit onChange={onChange}>
           <Errors />
           <Input field="isPublic Boolean!" label="Public" as="switch" />
-          <div style={ this.state.isPublic ? {} : {display: 'none'} }>
-            { this.publicOptions() }
+          <div style={this.state.isPublic ? {} : { display: 'none' }}>
+            {this.publicOptions()}
           </div>
           <div className={Classes.DIALOG_FOOTER}>
             <div className={Classes.DIALOG_FOOTER_ACTIONS}>
@@ -139,8 +140,8 @@ class StyleGuideSettings extends QueryComponent {
 
   publicOptions() {
     const voterOptions = [
-      { label: "Only Project Members",  value: "members" },
-      { label: "Anyone with GitHub account", value: "anyone"  },
+      { label: "Only Project Members", value: "members" },
+      { label: "Anyone with GitHub account", value: "anyone" },
     ]
     return <Input field="whoCanVote String" label="Who can vote?" as="radio" collection={voterOptions} hideOptionalLabel />
   }
