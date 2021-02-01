@@ -38,7 +38,7 @@ const project = {
 }
 
 class CreateProjectModal extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       wasManualDomainChange: false
@@ -50,7 +50,7 @@ class CreateProjectModal extends React.Component {
     this.props.closeModal()
   }
 
-  render(){
+  render() {
     const { isOpen, closeModal } = this.props
     if (!isOpen) return null
 
@@ -74,15 +74,15 @@ class CreateProjectModal extends React.Component {
         <Form forRecord={project} onSuccess={this.onSuccess.bind(this)} extraQuery={extraQuery} onChange={onChange}>
           <div className={Classes.DIALOG_BODY}>
             <Errors />
-            <Input field="name String!"       label="Name" autoFocus />
-            <Input field="domain String!"     label="Short Name for URL" />
-            <Input field="website String"     label="Website" />
+            <Input field="name String!" label="Name" autoFocus />
+            <Input field="domain String!" label="Short Name for URL" />
+            <Input field="website String" label="Website" />
             <Input field="description String" label="Description" as="textarea" />
 
             <h4>Linters (can be added later):</h4>
-            <Input field="addStyleGuides [String!]" value="rubocop" label="RuboCop" as="switch" />
-            <Input field="addStyleGuides [String!]" value="eslint" label="ESLint" as="switch" />
-            <Input field="addStyleGuides [String!]" value="free_form" label="Free Form" as="switch" />
+            <Input field="addStyleGuides [String!]" value="rubocop" label="RuboCop" as="switch" notReturnable />
+            <Input field="addStyleGuides [String!]" value="eslint" label="ESLint" as="switch" notReturnable />
+            <Input field="addStyleGuides [String!]" value="free_form" label="Free Form" as="switch" notReturnable />
           </div>
           <div className={Classes.DIALOG_FOOTER}>
             <div className={Classes.DIALOG_FOOTER_ACTIONS}>

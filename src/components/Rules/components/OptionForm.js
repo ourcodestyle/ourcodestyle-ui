@@ -47,7 +47,12 @@ const OptionForm = (props) => {
         <Errors />
         <Input field="paramId ID" as="hidden" />
         <Input field="value String!" autoFocus as={valueAs} label="Value" />
-        <Input field="description String" as="textarea" optionalLabel="(markdown)" />
+        <Input
+          field="description String"
+          as="textarea"
+          optionalLabel="(markdown)"
+          inputProps={{ rows: 7 }}
+        />
       </div>
       <div className={Classes.DIALOG_FOOTER}>
         <div className={Classes.DIALOG_FOOTER_ACTIONS}>

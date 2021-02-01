@@ -19,9 +19,9 @@ import {
   VOTE,
   USER,
 } from '~/gql/fragments'
-import {PROFILE_QUERY} from '~/components/App.js'
+import { PROFILE_QUERY } from '~/components/App.js'
 
-function* vote({ruleId, paramId, optionId, intent, allowMultipleValues}) {
+function* vote({ ruleId, paramId, optionId, intent, allowMultipleValues }) {
   const apolloClient = yield getContext('apolloClient')
   const mutation = gql`
     mutation vote($optionId: ID!, $intent: Intent) {
@@ -40,9 +40,9 @@ function* vote({ruleId, paramId, optionId, intent, allowMultipleValues}) {
     ${USER}
   `
 
-  const variables = {optionId, intent}
+  const variables = { optionId, intent }
 
-  const currentUser = apolloClient.store.cache.readQuery({query: gql(PROFILE_QUERY)}).user
+  const currentUser = apolloClient.store.cache.readQuery({ query: gql(PROFILE_QUERY) }).user
   const userCacheId = apolloClient.store.cache.config.dataIdFromObject(currentUser)
   const user = apolloClient.store.cache.readFragment({
     id: userCacheId,
@@ -65,19 +65,19 @@ function* vote({ruleId, paramId, optionId, intent, allowMultipleValues}) {
   }
 
   // const vote = yield new Promise(resolve => {
-    apolloClient.mutate({
-      mutation,
-      variables,
-      optimisticResponse,
-      update: (store, { data: { vote } }) => {
-        addVote({ apolloClient, vote, allowMultipleValues })
-      }
-    })
+  apolloClient.mutate({
+    mutation,
+    variables,
+    optimisticResponse,
+    update: (store, { data: { vote } }) => {
+      addVote({ apolloClient, vote, allowMultipleValues })
+    }
+  })
   // })
   // yield put(actions.voted({vote}))
 }
 
-function* unvote({ruleId, paramId, intent, voteId}) {
+function* unvote({ ruleId, paramId, intent, voteId }) {
   const apolloClient = yield getContext('apolloClient')
   const mutation = gql`
     mutation unvote($voteId: ID!) {
@@ -88,8 +88,8 @@ function* unvote({ruleId, paramId, intent, voteId}) {
     ${VOTE}
     ${USER}
   `
-  const variables = {voteId}
-  const currentUser = apolloClient.store.cache.readQuery({query: gql(PROFILE_QUERY)}).user
+  const variables = { voteId }
+  const currentUser = apolloClient.store.cache.readQuery({ query: gql(PROFILE_QUERY) }).user
   const userCacheId = apolloClient.store.cache.config.dataIdFromObject(currentUser)
   const user = apolloClient.store.cache.readFragment({
     id: userCacheId,
@@ -113,7 +113,7 @@ function* unvote({ruleId, paramId, intent, voteId}) {
   apolloClient.mutate({ mutation, variables, optimisticResponse })
 }
 
-function addVote({apolloClient, vote, allowMultipleValues}) {
+function addVote({ apolloClient, vote, allowMultipleValues }) {
   const cache = apolloClient.store.cache
   const query = gql(RULE_GQL)
   const variables = { id: vote.ruleId }
@@ -151,7 +151,7 @@ function addVote({apolloClient, vote, allowMultipleValues}) {
   cache.writeQuery({ query, variables, data })
 }
 
-function* voted({vote}) {
+function* voted({ vote }) {
   const apolloClient = yield getContext('apolloClient')
   const cache = apolloClient.store.cache
   const query = gql(RULE_GQL)
@@ -175,9 +175,9 @@ function* deleteOption({ id }) {
     mutation ($id: ID!){
       deleteOption(id: $id) {
         id
-        option {
+        param {
           id
-          rule {
+          options {
             id
           }
         }
@@ -189,7 +189,7 @@ function* deleteOption({ id }) {
     const query = gql(RULE_GQL)
     const rule = deleteOption.option.rule
     const data = store.readQuery({ query, variables: { id: rule.id } });
-    let option = _.find(data.rule.options, {id: deleteOption.option.id })
+    let option = _.find(data.rule.options, { id: deleteOption.option.id })
     option.values = _.reject(option.values, { id: deleteOption.id })
     store.writeQuery({ query, data })
   }
@@ -222,13 +222,13 @@ function* deleteRule({ id }) {
     const result = yield call(apolloClient.mutate, { mutation, variables })
     const rule = result.data.deleteRule
     yield put(push(`/projects/${rule.styleGuide.project.domain}/style-guides/${rule.styleGuide.id}`))
-  } catch(error) {
+  } catch (error) {
     const message = parseErrorMessage(error)
     AppToaster.show({ message, intent: Intent.DANGER })
   }
 }
 
-function* deleteParam({id}) {
+function* deleteParam({ id }) {
   const apolloClient = yield getContext('apolloClient')
   const mutation = gql`
     mutation ($id: ID!){
@@ -268,7 +268,7 @@ function* deleteParam({id}) {
   })
 }
 
-function* deleteComment({id}) {
+function* deleteComment({ id }) {
   const apolloClient = yield getContext('apolloClient')
   const mutation = gql`
     mutation ($id: ID!){

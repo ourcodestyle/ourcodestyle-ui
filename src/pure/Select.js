@@ -12,13 +12,15 @@ import _ from 'lodash'
 
 const MySelect = (props) => {
   let collection = props.collection
-  if (typeof(collection[0]) === "string") {
+  if (typeof (collection[0]) === "string") {
     collection = collection.map(x => ({ label: x, value: x }))
+  } else if (typeof (collection[0]) === "number") {
+    collection = collection.map(x => ({ label: `${x}`, value: x }))
   }
   const includeBlank = props.includeBlank
 
-  if (includeBlank){
-    const blankLabel = typeof(includeBlank) === "string" ? includeBlank : "- none -"
+  if (includeBlank) {
+    const blankLabel = typeof (includeBlank) === "string" ? includeBlank : "- none -"
     collection = [{
       label: blankLabel,
       value: null
@@ -26,7 +28,7 @@ const MySelect = (props) => {
   }
 
   let selectedItem = _.find(collection, x => x.value === props.value)
-  if (!selectedItem){
+  if (!selectedItem) {
     selectedItem = collection[0]
   }
   const noResults = <MenuItem disabled={true} text="No results." />
@@ -55,6 +57,9 @@ const MySelect = (props) => {
 
   const itemPredicate = (query, item) => {
     if (!item.value) return !query || query.length == 0
+    if (typeof (item.value) === 'number') {
+      return true
+    }
     return item.value.toLowerCase().indexOf(query.toLowerCase()) >= 0;
   };
 
@@ -65,16 +70,16 @@ const MySelect = (props) => {
   }
 
   return <Select
-            items={collection}
-            itemPredicate={itemPredicate}
-            itemRenderer={itemRenderer}
-            noResults={noResults}
-            onItemSelect={onItemSelect}
-            filterable={false}
-            disabled={props.disabled}
-          >
-          { button }
-        </Select>
+    items={collection}
+    itemPredicate={itemPredicate}
+    itemRenderer={itemRenderer}
+    noResults={noResults}
+    onItemSelect={onItemSelect}
+    filterable={false}
+    disabled={props.disabled}
+  >
+    {button}
+  </Select>
 }
 
 MySelect.propTypes = {

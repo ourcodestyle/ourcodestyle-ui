@@ -47,6 +47,7 @@ class Form extends React.Component {
         const isArray = _.startsWith(type, '[')
         const dataType = _.split(type, "!")[0]
         const inputType = el.props.as || 'text'
+        const notReturnable = el.props.notReturnable
 
         fieldsConfig[name] = {
           name,
@@ -54,7 +55,8 @@ class Form extends React.Component {
           isRequired,
           isArray,
           inputType,
-          dataType
+          dataType,
+          notReturnable
         }
       }
     })
@@ -63,13 +65,20 @@ class Form extends React.Component {
     if (!action) {
       if (record.id) {
         action = 'update'
-        fieldsConfig['id'] = { name: 'id', type: 'ID!' }
       } else {
         action = 'create'
       }
-    } else if (action == 'delete') {
+    }
+
+    if (action === 'update' || action === 'delete') {
       fieldsConfig['id'] = { name: 'id', type: 'ID!' }
     }
+
+    // if (action == 'update') {
+    //   fieldsConfig['id'] = { name: 'id', type: 'ID!' }
+    // } else if (action == 'delete') {
+    //   fieldsConfig['id'] = { name: 'id', type: 'ID!' }
+    // }
 
     const fieldNames = Object.keys(fieldsConfig)
 
@@ -135,21 +144,13 @@ class Form extends React.Component {
     //    id
     //    name
     //    description
-    // returnFields = _.reject(returnFields, x => x === 'addStyleGuides')
-    let mFields = _.reject(this.state.fields, x => x.name === 'addStyleGuides')
 
-    // if (this.state.action === 'create') {
-    //   mFields = [{
-    //     dataType: "ID",
-    //     inputType: "hidden",
-    //     isArray: false,
-    //     isRequired: false,
-    //     name: "id",
-    //     type: "ID",
-    //   }].concat(mFields)
-    // }
-
-    let returnFields = _.map(mFields, 'name').join("\n")
+    const returnableFields = _.reject(this.state.fields, 'notReturnable')
+    let returnFieldsList = _.map(returnableFields, 'name')
+    if (this.state.action === 'create') {
+      returnFieldsList = ['id'].concat(returnFieldsList)
+    }
+    let returnFields = returnFieldsList.join("\n")
 
     // can also fetch additional data, like
     const extraQuery = this.state.extraQuery || ""

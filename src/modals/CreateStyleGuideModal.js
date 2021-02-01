@@ -10,8 +10,8 @@ import { Form, Input, FormSubmit, Errors } from "~/fuks";
 
 import { USER } from "~/gql/fragments";
 
-import languages from "~/lists/languages";
-import linters from "~/lists/linters";
+import languages from "~/lists/languages"
+import linters from "~/lists/linters"
 
 class CreateStyleGuide extends React.Component {
   constructor(props) {

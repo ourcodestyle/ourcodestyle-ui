@@ -34,7 +34,7 @@ import Switch from './inputs/Switch'
 
 class Input extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.inputRef = null
     this.setInputRef = (element) => {
@@ -43,12 +43,12 @@ class Input extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.autoFocus){
+    if (this.props.autoFocus) {
       if (this.inputRef) this.inputRef.focus()
     }
   }
 
-  render(){
+  render() {
     let {
       form,
       field,
@@ -71,14 +71,14 @@ class Input extends React.Component {
     const fieldConfig = fieldsConfig[fieldName]
     const { isRequired, isArray } = fieldConfig
 
-    if (typeof(label) === 'undefined'){
+    if (typeof (label) === 'undefined') {
       label = _.capitalize(fieldName)
     }
 
     const value = this.props.hasOwnProperty('value') ? this.props.value : form[fieldName]
     const formValue = form[fieldName]
 
-    const fieldError = _.find(errors, {field: fieldName})
+    const fieldError = _.find(errors, { field: fieldName })
 
     const helperText = fieldError ? fieldError.messages.join('. ') : ""
     const intent = fieldError ? Intent.DANGER : null
@@ -99,7 +99,7 @@ class Input extends React.Component {
     if (as === "hidden") {
       return <input type="hidden" value={value} ref={inputProps.inputRef} />
     } else if (as === "textarea") {
-      input = <TextArea style={{width: '100%', fontFamily: 'Courier' }} {...inputProps} />
+      input = <TextArea style={{ width: '100%', fontFamily: 'monospace' }} {...inputProps} />
     } else if (as === "codearea") {
       input = <Code style={{ width: '100%' }} readOnly={false} {...inputProps} />
     } else if (as === "select") {
@@ -126,10 +126,10 @@ class Input extends React.Component {
       input = <InputGroup {...inputProps} />
     }
 
-    optionalLabel = optionalLabel || ( hideOptionalLabel ? '' : '(optional)' )
-    return <FormGroup {...{label, helperText, intent}} labelInfo={ isRequired ? '' : optionalLabel }>
-            {input}
-          </FormGroup>
+    optionalLabel = optionalLabel || (hideOptionalLabel ? '' : '(optional)')
+    return <FormGroup {...{ label, helperText, intent }} labelInfo={isRequired ? '' : optionalLabel}>
+      {input}
+    </FormGroup>
   }
 }
 
